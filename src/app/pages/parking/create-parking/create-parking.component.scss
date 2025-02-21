@@ -1,0 +1,30 @@
+.create-parking-container {
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  
+    button {
+      padding: 10px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+  
+    .error {
+      color: red;
+    }
+  }
+  

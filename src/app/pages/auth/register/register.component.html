@@ -1,0 +1,70 @@
+<div class="register-container">
+  <h2>Cadastro</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <!-- Nome e CPF na mesma linha -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Nome:</label>
+        <input id="name" type="text" formControlName="name" required />
+        <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+          <small>Nome é obrigatório e deve ter pelo menos 3 caracteres.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="cpf">CPF:</label>
+        <input id="cpf" type="text" formControlName="cpf" mask="000.000.000-00" required />
+        <div *ngIf="registerForm.get('cpf')?.invalid && registerForm.get('cpf')?.touched">
+          <small>CPF inválido. Deve conter 11 números.</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- E-mail e Telefone na mesma linha -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input id="email" type="email" formControlName="email" required />
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          <small>E-mail inválido.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="telephone">Telefone:</label>
+        <input id="telephone" type="text" formControlName="telephone" mask="(00) 00000-0000" required />
+        <div *ngIf="registerForm.get('telephone')?.invalid && registerForm.get('telephone')?.touched">
+          <small>Telefone deve conter 10 ou 11 dígitos.</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Senha e Confirmar Senha na mesma linha -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="password">Senha:</label>
+        <input id="password" type="password" formControlName="password" required />
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          <small>A senha deve ter pelo menos 6 caracteres.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirmar Senha:</label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword" required />
+        <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched">
+          <small>As senhas não coincidem.</small>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="registerForm.invalid || isLoading">
+      {{ isLoading ? 'Cadastrando...' : 'Cadastrar' }}
+    </button>
+
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  </form>
+
+  <p><a (click)="goToLogin()">Já tem conta? Faça login</a></p>
+</div>

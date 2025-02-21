@@ -1,0 +1,6 @@
+<nav *ngIf="isAuthenticated()">
+  <a routerLink="/dashboard">Dashboard</a>
+  <button (click)="logout()">Logout</button>
+</nav>
+
+<router-outlet></router-outlet>

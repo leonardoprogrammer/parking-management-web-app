@@ -1,0 +1,17 @@
+<div class="manage-parking-container">
+    <button (click)="goBack()">Voltar</button>
+  
+    <div *ngIf="isLoading">Carregando...</div>
+  
+    <div *ngIf="!isLoading && parkingData">
+      <h2>{{ parkingData.name }}</h2>
+      <p><strong>Endereço:</strong> {{ parkingData.address }}</p>
+  
+      <div class="actions">
+        <button>Ver Vagas</button>
+        <button>Funcionários</button>
+        <button>Configurações</button>
+      </div>
+    </div>
+  </div>
+  
