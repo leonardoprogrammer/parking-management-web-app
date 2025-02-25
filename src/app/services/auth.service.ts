@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/auth';
+  private apiUrl = 'http://localhost:8081/auth';
   private tokenKey = 'auth_token';
   private isAuthenticated = new BehaviorSubject<boolean>(this.hasToken());
 
@@ -45,5 +45,4 @@ export class AuthService {
   private hasToken(): boolean {
     return this.getToken() !== null;
   }
-  
 }

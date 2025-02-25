@@ -11,7 +11,7 @@
     <label for="password">Senha:</label>
     <input id="password" type="password" formControlName="password" required />
     <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-      <small>A senha deve ter pelo menos 6 caracteres.</small>
+      <small>Informe a senha.</small>
     </div>
 
     <button type="submit" [disabled]="loginForm.invalid || isLoading">

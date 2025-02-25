@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
@@ -18,7 +18,7 @@ export class RegisterComponent {
   isLoading = false;
   errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
     this.registerForm = this.fb.group(
       {
         name: ['', [Validators.required, Validators.minLength(3)]],
@@ -28,7 +28,7 @@ export class RegisterComponent {
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', [Validators.required]],
       },
-      { validators: this.passwordsMatchValidator } // 🔥 Adiciona a validação personalizada
+      { validators: this.passwordsMatchValidator }
     );
   }
 
@@ -44,15 +44,20 @@ export class RegisterComponent {
     this.isLoading = true;
     this.errorMessage = null;
 
-    const { confirmPassword, ...userData } = this.registerForm.value; // Remove confirmPassword antes de enviar
+    const { confirmPassword, ...userData } = this.registerForm.value;
 
-    console.log('Enviando dados:', userData); // Apenas para teste
-
-    // Simulando um delay para exibir carregamento
-    setTimeout(() => {
-      this.isLoading = false;
-      this.router.navigate(['/login']); // Redireciona para login após cadastro
-    }, 1500);
+    this.http.post('http://localhost:8081/auth/register', userData).subscribe({
+      next: (response) => {
+        console.log('Cadastro realizado com sucesso:', response);
+        this.isLoading = false;
+        this.router.navigate(['/login']); // Redireciona para login após cadastro
+      },
+      error: (error) => {
+        console.error('Erro ao realizar cadastro:', error);
+        this.isLoading = false;
+        this.errorMessage = 'Erro ao realizar cadastro. Tente novamente mais tarde.';
+      }
+    });
   }
 
   goToLogin() {
