@@ -1,6 +1,2 @@
-<nav *ngIf="isAuthenticated()">
-  <a routerLink="/dashboard">Dashboard</a>
-  <button (click)="logout()">Logout</button>
-</nav>
-
+<app-header *ngIf="isAuthenticated()"></app-header>
 <router-outlet></router-outlet>

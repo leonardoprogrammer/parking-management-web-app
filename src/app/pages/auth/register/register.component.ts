@@ -50,7 +50,7 @@ export class RegisterComponent {
       next: (response) => {
         console.log('Cadastro realizado com sucesso:', response);
         this.isLoading = false;
-        this.router.navigate(['/login']); // Redireciona para login após cadastro
+        this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Erro ao realizar cadastro:', error);

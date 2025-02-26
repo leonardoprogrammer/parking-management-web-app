@@ -45,7 +45,6 @@ export class ResetPasswordComponent implements OnInit {
   confirmResetRequest(email: string, id: string): void {
     this.isLoading = true;
     this.http.get(`http://localhost:8081/reset-password/confirm?email=${email}&id=${id}`, { responseType: 'text' })
-      .pipe(take(1)) // Garante que a assinatura seja feita apenas uma vez
       .subscribe({
         next: () => {
           this.showForm = true;

@@ -1,0 +1,13 @@
+<header class="app-header">
+  <div class="menu-icon" (click)="menu.classList.toggle('open')">
+    &#9776;
+  </div>
+  <h1>Gerenciador de Estacionamento</h1>
+  <nav #menu class="menu">
+    <ul>
+      <li (click)="navigateTo('/dashboard')">Dashboard</li>
+      <li (click)="navigateTo('/profile')">Editar perfil</li>
+      <li (click)="logout()">Sair</li>
+    </ul>
+  </nav>
+</header>

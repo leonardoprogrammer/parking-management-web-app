@@ -32,7 +32,7 @@ export class CreateParkingComponent {
 
     this.parkingService.createParking(this.parkingForm.value).subscribe({
       next: () => {
-        this.router.navigate(['/dashboard']); // Redireciona após criar
+        this.router.navigate(['/dashboard']);
       },
       error: () => {
         this.errorMessage = 'Erro ao criar estacionamento!';

@@ -1,0 +1,53 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  .menu-icon {
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  h1 {
+    margin: 0;
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background-color: #333;
+    width: 100%;
+    text-align: left;
+
+    &.open {
+      display: block;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        padding: 10px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #444;
+        }
+      }
+    }
+  }
+}
