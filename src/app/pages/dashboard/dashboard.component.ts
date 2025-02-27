@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,12 +22,21 @@ export class DashboardComponent implements OnInit {
   }
 
   loadParkings() {
-    this.http.get<any[]>('http://localhost:8080/parkings/user').subscribe({
+    const userId = this.authService.getUserId();
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const url = `http://localhost:8082/parking/user/${userId}`;
+
+    console.log('Request URL:', url);
+    console.log('Request Headers:', headers.keys().map(key => `${key}: ${headers.get(key)}`));
+
+    this.http.get<any[]>(`http://localhost:8082/parking/user/${userId}`, { headers }).subscribe({
       next: (data) => {
         this.parkings = data;
         this.isLoading = false;
       },
-      error: () => {
+      error: (error) => {
+        console.error('Error:', error);
         this.isLoading = false;
       },
     });
@@ -35,6 +44,10 @@ export class DashboardComponent implements OnInit {
 
   createParking() {
     this.router.navigate(['/create-parking']);
+  }
+
+  navigateToParking(parkingId: string) {
+    this.router.navigate(['/manage', parkingId]);
   }
 
   logout() {

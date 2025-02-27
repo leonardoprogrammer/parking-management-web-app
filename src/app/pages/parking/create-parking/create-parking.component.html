@@ -1,26 +1,25 @@
 <div class="create-parking-container">
-    <h2>Criar Novo Estacionamento</h2>
-  
-    <form [formGroup]="parkingForm" (ngSubmit)="onSubmit()">
-      <label for="name">Nome:</label>
-      <input id="name" type="text" formControlName="name" required />
-      <div *ngIf="parkingForm.get('name')?.invalid && parkingForm.get('name')?.touched">
-        <small>O nome deve ter pelo menos 3 caracteres.</small>
-      </div>
-  
-      <label for="address">Endereço:</label>
-      <input id="address" type="text" formControlName="address" required />
-      <div *ngIf="parkingForm.get('address')?.invalid && parkingForm.get('address')?.touched">
-        <small>O endereço deve ter pelo menos 5 caracteres.</small>
-      </div>
-  
-      <button type="submit" [disabled]="parkingForm.invalid || isLoading">
-        {{ isLoading ? 'Criando...' : 'Criar Estacionamento' }}
-      </button>
-  
-      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-    </form>
-  
-    <p><a routerLink="/dashboard">Voltar ao Dashboard</a></p>
-  </div>
-  
+  <h2>Criar Novo Estacionamento</h2>
+
+  <form [formGroup]="parkingForm" (ngSubmit)="onSubmit()">
+    <label for="name">Nome:</label>
+    <input id="name" type="text" formControlName="name" required />
+    <div *ngIf="parkingForm.get('name')?.invalid && parkingForm.get('name')?.touched">
+      <small>O nome deve ter pelo menos 3 caracteres.</small>
+    </div>
+
+    <label for="address">Endereço:</label>
+    <input id="address" type="text" formControlName="address" required />
+    <div *ngIf="parkingForm.get('address')?.invalid && parkingForm.get('address')?.touched">
+      <small>O endereço deve ter pelo menos 5 caracteres.</small>
+    </div>
+
+    <button type="submit" [disabled]="parkingForm.invalid || isLoading">
+      {{ isLoading ? 'Criando...' : 'Criar Estacionamento' }}
+    </button>
+
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  </form>
+
+  <p><a routerLink="/dashboard">Voltar ao Dashboard</a></p>
+</div>

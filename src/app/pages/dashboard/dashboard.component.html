@@ -12,7 +12,7 @@
   </div>
 
   <div *ngIf="parkings.length > 0" class="parking-list">
-    <div *ngFor="let parking of parkings" class="parking-card" (click)="router.navigate(['/manage', parking.id])">
+    <div *ngFor="let parking of parkings" class="parking-card" (click)="navigateToParking(parking.id)">
       <h3>{{ parking.name }}</h3>
       <p>{{ parking.address }}</p>
     </div>
