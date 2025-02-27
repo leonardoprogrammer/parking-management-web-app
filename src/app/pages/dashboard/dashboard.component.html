@@ -8,7 +8,6 @@
   <div *ngIf="!isLoading && parkings.length === 0" class="no-parking">
     <p>Você não é dono ou funcionário de nenhum estacionamento.</p>
     <p>Crie um estacionamento ou peça para um administrador te adicionar.</p>
-    <button (click)="createParking()">Criar Estacionamento</button>
   </div>
 
   <div *ngIf="parkings.length > 0" class="parking-list">
@@ -17,4 +16,6 @@
       <p>{{ parking.address }}</p>
     </div>
   </div>
+
+  <button (click)="createParking()">Criar Estacionamento</button>
 </div>

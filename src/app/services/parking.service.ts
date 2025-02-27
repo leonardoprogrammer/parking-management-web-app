@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParkingService {
-  private apiUrl = 'http://localhost:8080/parkings';
+  private apiUrl = 'http://localhost:8082/parking';
 
   constructor(private http: HttpClient) {}
 
-  getUserParkings(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/user`);
+  getParkingById(parkingId: string, headers: HttpHeaders): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${parkingId}`, { headers });
   }
 
-  getParkingById(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
-  }
-
-  createParking(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+  createParking(parkingData: any, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(this.apiUrl, parkingData, { headers });
   }
 }

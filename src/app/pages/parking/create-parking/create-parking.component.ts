@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-import { Router } from '@angular/router';
+import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 import { ParkingService } from '../../../services/parking.service';
 
 @Component({
@@ -18,7 +18,13 @@ export class CreateParkingComponent {
   isLoading = false;
   errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private parkingService: ParkingService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private parkingService: ParkingService,
+    private authService: AuthService,
+    private router: Router,
+    private http: HttpClient
+  ) {
     this.parkingForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       address: ['', [Validators.required, Validators.minLength(5)]],
@@ -31,9 +37,18 @@ export class CreateParkingComponent {
     this.isLoading = true;
     this.errorMessage = null;
 
-    this.parkingService.createParking(this.parkingForm.value).subscribe({
-      next: () => {
-        this.router.navigate(['/dashboard']);
+    const userId = this.authService.getUserId();
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const body = {
+      userCreatorId: userId,
+      name: this.parkingForm.value.name,
+      address: this.parkingForm.value.address,
+    };
+
+    this.http.post('http://localhost:8082/parking', body, { headers }).subscribe({
+      next: (response: any) => {
+        this.router.navigate(['/manage', response.id]);
       },
       error: () => {
         this.errorMessage = 'Erro ao criar estacionamento!';

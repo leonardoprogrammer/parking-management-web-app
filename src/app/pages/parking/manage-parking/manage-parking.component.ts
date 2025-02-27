@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
 import { ParkingService } from '../../../services/parking.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-manage-parking',
@@ -20,6 +21,7 @@ export class ManageParkingComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private parkingService: ParkingService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -31,7 +33,9 @@ export class ManageParkingComponent implements OnInit {
   }
 
   loadParkingDetails() {
-    this.parkingService.getParkingById(this.parkingId!).subscribe({
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.parkingService.getParkingById(this.parkingId!, headers).subscribe({
       next: (data) => {
         this.parkingData = data;
         this.isLoading = false;
@@ -44,5 +48,17 @@ export class ManageParkingComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/dashboard']);
+  }
+
+  viewSlots() {
+    // Lógica para visualizar vagas
+  }
+
+  viewEmployees() {
+    // Lógica para visualizar funcionários
+  }
+
+  viewSettings() {
+    // Lógica para visualizar configurações
   }
 }

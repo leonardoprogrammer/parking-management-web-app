@@ -27,16 +27,12 @@ export class DashboardComponent implements OnInit {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const url = `http://localhost:8082/parking/user/${userId}`;
 
-    console.log('Request URL:', url);
-    console.log('Request Headers:', headers.keys().map(key => `${key}: ${headers.get(key)}`));
-
-    this.http.get<any[]>(`http://localhost:8082/parking/user/${userId}`, { headers }).subscribe({
+    this.http.get<any[]>(url, { headers }).subscribe({
       next: (data) => {
         this.parkings = data;
         this.isLoading = false;
       },
-      error: (error) => {
-        console.error('Error:', error);
+      error: () => {
         this.isLoading = false;
       },
     });
