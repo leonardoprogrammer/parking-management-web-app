@@ -5,11 +5,13 @@ import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HttpClientModule, CommonModule, HeaderComponent],
+  imports: [RouterOutlet, HttpClientModule, CommonModule, HeaderComponent, MatDialogModule, ConfirmDeleteDialogComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

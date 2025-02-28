@@ -10,7 +10,7 @@
     <div class="actions">
       <button (click)="viewSlots()">Ver Vagas</button>
       <button (click)="viewEmployees()">Funcionários</button>
-      <button (click)="viewSettings()">Configurações</button>
+      <button *ngIf="isOwner" class="delete-button" (click)="confirmDelete()">Apagar Estacionamento</button>
     </div>
   </div>
 </div>

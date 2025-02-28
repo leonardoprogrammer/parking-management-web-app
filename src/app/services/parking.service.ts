@@ -18,4 +18,8 @@ export class ParkingService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.post(this.apiUrl, parkingData, { headers });
   }
+
+  deleteParkingById(parkingId: string, headers: HttpHeaders): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${parkingId}`, { headers });
+  }
 }
