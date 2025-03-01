@@ -6,6 +6,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ParkingService } from '../../../services/parking.service';
 import { AuthService } from '../../../services/auth.service';
 import { ConfirmDeleteDialogComponent } from '../../../dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { AddVehicleDialogComponent } from '../../../dialogs/add-vehicle-dialog/add-vehicle-dialog.component';
 
 @Component({
   selector: 'app-manage-parking',
@@ -17,8 +18,10 @@ import { ConfirmDeleteDialogComponent } from '../../../dialogs/confirm-delete-di
 export class ManageParkingComponent implements OnInit {
   parkingId: string | null = null;
   parkingData: any;
+  parkedVehicles: any[] = [];
   isLoading = true;
   isOwner = false;
+  errorMessage: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +36,7 @@ export class ManageParkingComponent implements OnInit {
     this.parkingId = this.route.snapshot.paramMap.get('id');
     if (this.parkingId) {
       this.loadParkingDetails();
+      this.loadParkedVehicles();
     }
   }
 
@@ -49,6 +53,56 @@ export class ManageParkingComponent implements OnInit {
       error: () => {
         this.isLoading = false;
       },
+    });
+  }
+
+  loadParkedVehicles() {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const url = `http://localhost:8083/parked-vehicle/parking/${this.parkingId}`;
+
+    this.http.get<any[]>(url, { headers }).subscribe({
+      next: (data) => {
+        this.parkedVehicles = data.sort((a, b) => new Date(b.entryDate).getTime() - new Date(a.entryDate).getTime());
+        this.errorMessage = null;
+      },
+      error: (error) => {
+        if (error.status === 404) {
+          this.errorMessage = 'Nenhum veículo estacionado';
+        } else {
+          this.errorMessage = 'Erro ao carregar veículos estacionados';
+        }
+      },
+    });
+  }
+
+  openAddVehicleDialog() {
+    const dialogRef = this.dialog.open(AddVehicleDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.addVehicle(result);
+      }
+    });
+  }
+
+  addVehicle(vehicleData: any) {
+    const token = this.authService.getToken();
+    const userId = this.authService.getUserId();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const body = {
+      ...vehicleData,
+      parkingId: this.parkingId,
+      checkinEmployeeId: userId
+    };
+
+    this.http.post<any>('http://localhost:8083/parked-vehicle/checkin', body, { headers }).subscribe({
+      next: (data) => {
+        this.parkedVehicles.unshift(data); // Adiciona o novo veículo no início da lista
+      },
+      error: () => {
+        this.errorMessage = 'Erro ao adicionar veículo';
+      }
     });
   }
 

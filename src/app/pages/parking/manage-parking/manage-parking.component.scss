@@ -1,7 +1,30 @@
 .manage-parking-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: auto;
-  text-align: center;
+  text-align: left;
+  padding-top: 70px; /* Ajuste conforme necessário para evitar a sobreposição */
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .title {
+    h2 {
+      margin: 0;
+    }
+    p {
+      margin: 5px 0;
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 
   button {
     margin: 10px;
@@ -17,20 +40,40 @@
     background-color: #dc3545;
   }
 
-  .actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  .vehicle-list {
     margin-top: 20px;
-  }
-
-  .delete-confirmation {
-    margin-top: 20px;
-    p {
+    h3 {
       margin-bottom: 10px;
     }
-    button {
-      margin: 5px;
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
+    .add-vehicle-button {
+      background-color: #28a745;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        .vehicle-info {
+          display: flex;
+          justify-content: space-between;
+          p {
+            margin: 0 10px;
+          }
+        }
+      }
+    }
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 20px;
   }
 }

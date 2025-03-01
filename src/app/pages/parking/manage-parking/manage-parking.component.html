@@ -1,16 +1,36 @@
 <div class="manage-parking-container">
-  <button (click)="goBack()">Voltar ao Dashboard</button>
-
-  <div *ngIf="isLoading">Carregando...</div>
-
-  <div *ngIf="!isLoading && parkingData">
-    <h2>{{ parkingData.name }}</h2>
-    <p><strong>Endereço:</strong> {{ parkingData.address }}</p>
-
+  <div class="header">
+    <div class="title">
+      <h2>{{ parkingData.name }}</h2>
+      <p><strong>Endereço:</strong> {{ parkingData.address }}</p>
+    </div>
     <div class="actions">
       <button (click)="viewSlots()">Ver Vagas</button>
       <button (click)="viewEmployees()">Funcionários</button>
       <button *ngIf="isOwner" class="delete-button" (click)="confirmDelete()">Apagar Estacionamento</button>
     </div>
+  </div>
+
+  <div *ngIf="isLoading">Carregando...</div>
+
+  <div *ngIf="!isLoading && errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage && parkedVehicles.length > 0" class="vehicle-list">
+    <div class="list-header">
+      <h3>Veículos Estacionados</h3>
+      <button class="add-vehicle-button" (click)="openAddVehicleDialog()">Adicionar Veículo</button>
+    </div>
+    <ul>
+      <li *ngFor="let vehicle of parkedVehicles">
+        <div class="vehicle-info">
+          <p><strong>Placa:</strong> {{ vehicle.plate }}</p>
+          <p><strong>Modelo:</strong> {{ vehicle.model }}</p>
+          <p><strong>Cor:</strong> {{ vehicle.color }}</p>
+          <p><strong>Data de Entrada:</strong> {{ vehicle.entryDate | date: 'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
