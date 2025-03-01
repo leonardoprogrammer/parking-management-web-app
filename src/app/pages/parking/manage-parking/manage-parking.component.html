@@ -1,6 +1,6 @@
 <div class="manage-parking-container">
   <div class="header">
-    <div class="title">
+    <div class="title" *ngIf="parkingData">
       <h2>{{ parkingData.name }}</h2>
       <p><strong>Endereço:</strong> {{ parkingData.address }}</p>
     </div>
@@ -13,15 +13,16 @@
 
   <div *ngIf="isLoading">Carregando...</div>
 
+  <div class="list-header" *ngIf="!isLoading && parkingData">
+    <h3>Veículos Estacionados</h3>
+    <button class="add-vehicle-button" (click)="openAddVehicleDialog()">Adicionar Veículo</button>
+  </div>
+
   <div *ngIf="!isLoading && errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
 
   <div *ngIf="!isLoading && !errorMessage && parkedVehicles.length > 0" class="vehicle-list">
-    <div class="list-header">
-      <h3>Veículos Estacionados</h3>
-      <button class="add-vehicle-button" (click)="openAddVehicleDialog()">Adicionar Veículo</button>
-    </div>
     <ul>
       <li *ngFor="let vehicle of parkedVehicles" (click)="openVehicleDetailsDialog(vehicle)">
         <div class="vehicle-info">

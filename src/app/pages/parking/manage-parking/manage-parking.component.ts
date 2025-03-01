@@ -14,7 +14,7 @@ import { VehicleDetailsDialogComponent } from '../../../dialogs/vehicle-details-
   standalone: true,
   imports: [CommonModule, HttpClientModule, MatDialogModule],
   templateUrl: './manage-parking.component.html',
-  styleUrl: './manage-parking.component.scss',
+  styleUrls: ['./manage-parking.component.scss'],
 })
 export class ManageParkingComponent implements OnInit {
   parkingId: string | null = null;
@@ -108,13 +108,28 @@ export class ManageParkingComponent implements OnInit {
   }
 
   openVehicleDetailsDialog(vehicle: any) {
-    const dialogRef = this.dialog.open(VehicleDetailsDialogComponent, {
-      data: vehicle
-    });
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const url = `http://localhost:8083/parked-vehicle/${vehicle.id}/checkin`;
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.success) {
-        this.parkedVehicles = this.parkedVehicles.filter(v => v.id !== result.id);
+    this.http.get<any>(url, { headers }).subscribe({
+      next: (data) => {
+        const dialogRef = this.dialog.open(VehicleDetailsDialogComponent, {
+          data: {
+            ...vehicle,
+            checkinEmployeeName: data.checkinEmployeeName,
+            checkinDate: data.checkinDate
+          }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result && result.success) {
+            this.parkedVehicles = this.parkedVehicles.filter(v => v.id !== result.id);
+          }
+        });
+      },
+      error: (error) => {
+        console.error("Error loading vehicle details:", error);
       }
     });
   }

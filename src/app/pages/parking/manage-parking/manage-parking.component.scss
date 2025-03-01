@@ -40,18 +40,27 @@
     background-color: #dc3545;
   }
 
+  .add-vehicle-button {
+    background-color: #28a745;
+    color: white;
+    margin: 0;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
   .vehicle-list {
     margin-top: 20px;
     h3 {
       margin-bottom: 10px;
-    }
-    .list-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .add-vehicle-button {
-      background-color: #28a745;
     }
     ul {
       list-style: none;

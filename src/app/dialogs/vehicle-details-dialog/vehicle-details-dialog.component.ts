@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,7 +8,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-vehicle-details-dialog',
@@ -18,27 +18,27 @@ import { CommonModule } from '@angular/common';
       <form [formGroup]="vehicleForm">
         <mat-form-field>
           <mat-label>Placa</mat-label>
-          <input matInput formControlName="plate">
+          <input matInput formControlName="plate" readonly>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Modelo</mat-label>
-          <input matInput formControlName="model">
+          <input matInput formControlName="model" readonly>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Cor</mat-label>
-          <input matInput formControlName="color">
+          <input matInput formControlName="color" readonly>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Vaga</mat-label>
-          <input matInput formControlName="space">
+          <input matInput formControlName="space" readonly>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Data de Entrada</mat-label>
-          <input matInput formControlName="entryDate">
+          <input matInput formControlName="entryDate" readonly>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Hora de Entrada</mat-label>
-          <input matInput formControlName="entryTime">
+          <input matInput formControlName="entryTime" readonly>
         </mat-form-field>
         <mat-checkbox formControlName="paid">Pago</mat-checkbox>
         <mat-form-field *ngIf="vehicleForm.get('paid')?.value">
@@ -46,6 +46,10 @@ import { CommonModule } from '@angular/common';
           <input matInput formControlName="paymentMethod" required>
         </mat-form-field>
       </form>
+      <div class="additional-info">
+        <p><strong>Adicionado pelo funcionário:</strong> {{ data.checkinEmployeeName }}</p>
+        <p><strong>Adicionado em:</strong> {{ formatDateWithTime(data.checkinDate) }}</p>
+      </div>
     </mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button (click)="onCancel()">Fechar</button>
@@ -53,9 +57,10 @@ import { CommonModule } from '@angular/common';
     </mat-dialog-actions>
   `,
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule, MatInputModule, MatCheckboxModule, ReactiveFormsModule]
+  imports: [CommonModule, MatDialogModule, MatButtonModule, MatInputModule, MatCheckboxModule, ReactiveFormsModule],
+  providers: [DatePipe]
 })
-export class VehicleDetailsDialogComponent {
+export class VehicleDetailsDialogComponent implements AfterViewInit {
   vehicleForm: FormGroup;
 
   constructor(
@@ -63,18 +68,32 @@ export class VehicleDetailsDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef,
+    private datePipe: DatePipe
   ) {
     this.vehicleForm = this.fb.group({
-      plate: [data.plate, Validators.required],
-      model: [data.model, Validators.required],
-      color: [data.color, Validators.required],
+      plate: [data.plate],
+      model: [data.model],
+      color: [data.color],
       space: [data.space],
-      entryDate: [data.entryDate.split('T')[0], Validators.required],
-      entryTime: [data.entryDate.split('T')[1].substring(0, 5), Validators.required],
+      entryDate: [this.formatDate(data.entryDate)],
+      entryTime: [data.entryDate.split('T')[1].substring(0, 5)],
       paid: [false],
       paymentMethod: ['']
     });
+  }
+
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
+  }
+
+  formatDate(date: string): string {
+    return this.datePipe.transform(date, 'dd/MM/yyyy')!;
+  }
+
+  formatDateWithTime(date: string): string {
+    return this.datePipe.transform(date, 'dd/MM/yyyy HH:mm')!;
   }
 
   onCheckout(): void {
