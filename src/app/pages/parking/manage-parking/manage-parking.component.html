@@ -23,7 +23,7 @@
       <button class="add-vehicle-button" (click)="openAddVehicleDialog()">Adicionar Veículo</button>
     </div>
     <ul>
-      <li *ngFor="let vehicle of parkedVehicles">
+      <li *ngFor="let vehicle of parkedVehicles" (click)="openVehicleDetailsDialog(vehicle)">
         <div class="vehicle-info">
           <p><strong>Placa:</strong> {{ vehicle.plate }}</p>
           <p><strong>Modelo:</strong> {{ vehicle.model }}</p>

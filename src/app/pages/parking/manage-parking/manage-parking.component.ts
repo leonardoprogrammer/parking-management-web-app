@@ -7,6 +7,7 @@ import { ParkingService } from '../../../services/parking.service';
 import { AuthService } from '../../../services/auth.service';
 import { ConfirmDeleteDialogComponent } from '../../../dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { AddVehicleDialogComponent } from '../../../dialogs/add-vehicle-dialog/add-vehicle-dialog.component';
+import { VehicleDetailsDialogComponent } from '../../../dialogs/vehicle-details-dialog/vehicle-details-dialog.component';
 
 @Component({
   selector: 'app-manage-parking',
@@ -98,10 +99,22 @@ export class ManageParkingComponent implements OnInit {
 
     this.http.post<any>('http://localhost:8083/parked-vehicle/checkin', body, { headers }).subscribe({
       next: (data) => {
-        this.parkedVehicles.unshift(data); // Adiciona o novo veículo no início da lista
+        this.parkedVehicles.unshift(data);
       },
       error: () => {
         this.errorMessage = 'Erro ao adicionar veículo';
+      }
+    });
+  }
+
+  openVehicleDetailsDialog(vehicle: any) {
+    const dialogRef = this.dialog.open(VehicleDetailsDialogComponent, {
+      data: vehicle
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.success) {
+        this.parkedVehicles = this.parkedVehicles.filter(v => v.id !== result.id);
       }
     });
   }
