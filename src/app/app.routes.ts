@@ -20,7 +20,7 @@ export const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'manage/:id', component: ManageParkingComponent, canActivate: [authGuard] },
   { path: 'create-parking', component: CreateParkingComponent, canActivate: [authGuard] },
-  { path: 'history', component: HistoryComponent, canActivate: [authGuard] },
+  { path: 'manage/:id/history', component: HistoryComponent, canActivate: [authGuard] },
   { path: 'manage/:id/employees', component: EmployeesComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: 'login' },
 ];

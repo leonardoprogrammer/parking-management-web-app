@@ -23,6 +23,8 @@ export class ManageParkingComponent implements OnInit {
   isLoading = true;
   isOwner = false;
   errorMessage: string | null = null;
+  canCheckinVehicle: boolean = false;
+  canCheckoutVehicle: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +40,7 @@ export class ManageParkingComponent implements OnInit {
     if (this.parkingId) {
       this.loadParkingDetails();
       this.loadParkedVehicles();
+      this.checkPermissions();
     }
   }
 
@@ -73,6 +76,22 @@ export class ManageParkingComponent implements OnInit {
         } else {
           this.errorMessage = 'Erro ao carregar veículos estacionados';
         }
+      },
+    });
+  }
+
+  checkPermissions() {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const url = `http://localhost:8082/employee-permissions/currentUser?parkingId=${this.parkingId}`;
+
+    this.http.get<any>(url, { headers }).subscribe({
+      next: (data) => {
+        this.canCheckinVehicle = data.canCheckinVehicle;
+        this.canCheckoutVehicle = data.canCheckoutVehicle;
+      },
+      error: (error) => {
+        console.error('Erro ao verificar permissões', error);
       },
     });
   }
@@ -118,7 +137,8 @@ export class ManageParkingComponent implements OnInit {
           data: {
             ...vehicle,
             checkinEmployeeName: data.checkinEmployeeName,
-            checkinDate: data.checkinDate
+            checkinDate: data.checkinDate,
+            canCheckoutVehicle: this.canCheckoutVehicle // Passar a permissão para o diálogo
           }
         });
 
@@ -162,7 +182,7 @@ export class ManageParkingComponent implements OnInit {
   }
 
   viewHistory() {
-    this.router.navigate(['/history']);
+    this.router.navigate([`/manage/${this.parkingId}/history`]);
   }
 
   viewEmployees() {

@@ -24,6 +24,7 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       text-align: left;
+      cursor: pointer;
 
       button {
         margin-top: 10px;
@@ -33,5 +34,15 @@
 
   button {
     margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #0056b3;
   }
 }

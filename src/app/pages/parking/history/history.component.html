@@ -5,10 +5,19 @@
   </div>
   <div *ngIf="!errorMessage && historyData.length > 0">
     <ul>
-      <li *ngFor="let item of historyData">
-        <p><strong>Data:</strong> {{ item.date | date: 'dd/MM/yyyy HH:mm' }}</p>
-        <p><strong>Descrição:</strong> {{ item.description }}</p>
+      <li *ngFor="let item of historyData" [ngClass]="{'checked-out': item.checkedOut}" (click)="openHistoryDetailsDialog(item.parkedVehicleId)">
+        <p><strong>Placa:</strong> {{ item.plate }}</p>
+        <p><strong>Modelo:</strong> {{ item.model }}</p>
+        <p><strong>Cor:</strong> {{ item.color }}</p>
+        <p><strong>Data de Entrada:</strong> {{ item.entryDate | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>Data de Criação:</strong> {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>Check-out:</strong> {{ item.checkedOut ? 'Sim' : 'Não' }}</p>
       </li>
     </ul>
+    <div class="pagination">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Próxima</button>
+    </div>
   </div>
 </div>

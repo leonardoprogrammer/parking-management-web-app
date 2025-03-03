@@ -22,6 +22,46 @@
       border: 1px solid #ccc;
       border-radius: 4px;
       margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      cursor: pointer;
+
+      &.checked-out {
+        background-color: #07c44f;
+        border-color: #c3e6cb;
+      }
+    }
+
+    p {
+      margin: 0;
+      flex: 1 1 30%;
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+      margin: 0 5px;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    span {
+      margin: 0 10px;
     }
   }
 }

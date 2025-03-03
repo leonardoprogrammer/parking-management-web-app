@@ -15,7 +15,7 @@
 
   <div class="list-header" *ngIf="!isLoading && parkingData">
     <h3>Veículos Estacionados</h3>
-    <button class="add-vehicle-button" (click)="openAddVehicleDialog()">Adicionar Veículo</button>
+    <button *ngIf="canCheckinVehicle" class="add-vehicle-button" (click)="openAddVehicleDialog()">Adicionar Veículo</button>
   </div>
 
   <div *ngIf="!isLoading && errorMessage" class="error-message">

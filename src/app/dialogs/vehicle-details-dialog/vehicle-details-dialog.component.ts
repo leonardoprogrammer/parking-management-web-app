@@ -40,8 +40,8 @@ import { CommonModule, DatePipe } from '@angular/common';
           <mat-label>Hora de Entrada</mat-label>
           <input matInput formControlName="entryTime" readonly>
         </mat-form-field>
-        <mat-checkbox formControlName="paid">Pago</mat-checkbox>
-        <mat-form-field *ngIf="vehicleForm.get('paid')?.value">
+        <mat-checkbox *ngIf="canCheckoutVehicle" formControlName="paid">Pago</mat-checkbox>
+        <mat-form-field *ngIf="canCheckoutVehicle && vehicleForm.get('paid')?.value">
           <mat-label>Método de Pagamento</mat-label>
           <input matInput formControlName="paymentMethod" required>
         </mat-form-field>
@@ -53,7 +53,7 @@ import { CommonModule, DatePipe } from '@angular/common';
     </mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button (click)="onCancel()">Fechar</button>
-      <button mat-button color="primary" (click)="onCheckout()" [disabled]="vehicleForm.invalid">Checkout</button>
+      <button *ngIf="canCheckoutVehicle" mat-button color="primary" (click)="onCheckout()" [disabled]="vehicleForm.invalid">Checkout</button>
     </mat-dialog-actions>
   `,
   standalone: true,
@@ -62,6 +62,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 })
 export class VehicleDetailsDialogComponent implements AfterViewInit {
   vehicleForm: FormGroup;
+  canCheckoutVehicle: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<VehicleDetailsDialogComponent>,
@@ -72,6 +73,7 @@ export class VehicleDetailsDialogComponent implements AfterViewInit {
     private cdr: ChangeDetectorRef,
     private datePipe: DatePipe
   ) {
+    this.canCheckoutVehicle = data.canCheckoutVehicle;
     this.vehicleForm = this.fb.group({
       plate: [data.plate],
       model: [data.model],
@@ -101,9 +103,11 @@ export class VehicleDetailsDialogComponent implements AfterViewInit {
       const token = this.authService.getToken();
       const userId = this.authService.getUserId();
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      const now = new Date();
+      const localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();
       const body = {
         parkedVehicleId: this.data.id,
-        checkoutDate: new Date().toISOString(),
+        checkoutDate: localDate,
         checkoutEmployeeId: userId,
         paid: this.vehicleForm.get('paid')?.value,
         paymentMethod: this.vehicleForm.get('paid')?.value ? this.vehicleForm.get('paymentMethod')?.value : null
