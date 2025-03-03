@@ -1,0 +1,23 @@
+<div class="employees-container">
+  <div class="owner">
+    <p><strong>Dono:</strong> {{ ownerName }}</p>
+  </div>
+  <div class="header">
+    <div class="actions">
+      <h3>Funcionários</h3>
+      <button *ngIf="canAddEmployee" class="add-employee-button">Adicionar</button>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!errorMessage && employees.length > 0" class="employee-list">
+    <ul>
+      <li *ngFor="let employee of employees" (click)="openEmployeeDetailsDialog(employee.employeeId)">
+        <p>{{ employee.employeeName }}</p>
+      </li>
+    </ul>
+  </div>
+</div>

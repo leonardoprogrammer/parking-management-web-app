@@ -1,0 +1,40 @@
+<div class="employee-details-dialog-container">
+  <h2>Detalhes do Funcionário</h2>
+  <mat-tab-group>
+    <mat-tab label="Detalhes">
+      <div *ngIf="employeeDetails">
+        <p><strong>Nome:</strong> {{ employeeDetails.employeeName }}</p>
+        <p *ngIf="employeeDetails?.permissions"><strong>CPF:</strong> {{ employeeDetails.cpf }}</p>
+        <p *ngIf="employeeDetails?.permissions"><strong>Email:</strong> {{ employeeDetails.email }}</p>
+        <p *ngIf="employeeDetails?.permissions"><strong>Telefone:</strong> {{ employeeDetails.telephone }}</p>
+        <p><strong>Adicionado por:</strong> {{ employeeDetails.adderUserName }}</p>
+        <p><strong>Data de Adição:</strong> {{ employeeDetails.dateAdded | date: 'dd/MM/yyyy HH:mm' }}</p>
+      </div>
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+    </mat-tab>
+    <mat-tab *ngIf="employeeDetails?.permissions" label="Permissões">
+      <div *ngIf="employeeDetails.permissions">
+        <p>
+          <strong>Check-in de Veículos:</strong>
+          <mat-slide-toggle [(ngModel)]="employeeDetails.permissions.canCheckinVehicle" (change)="enableSaveButton()">Sim</mat-slide-toggle>
+        </p>
+        <p>
+          <strong>Check-out de Veículos:</strong>
+          <mat-slide-toggle [(ngModel)]="employeeDetails.permissions.canCheckoutVehicle" (change)="enableSaveButton()">Sim</mat-slide-toggle>
+        </p>
+        <p>
+          <strong>Adicionar Funcionários:</strong>
+          <mat-slide-toggle [(ngModel)]="employeeDetails.permissions.canAddEmployee" (change)="enableSaveButton()">Sim</mat-slide-toggle>
+        </p>
+        <p>
+          <strong>Editar Estacionamento:</strong>
+          <mat-slide-toggle [(ngModel)]="employeeDetails.permissions.canEditParking" (change)="enableSaveButton()">Sim</mat-slide-toggle>
+        </p>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  <button mat-button (click)="closeDialog()">Fechar</button>
+  <button mat-button *ngIf="employeeDetails?.permissions" [disabled]="!isSaveEnabled" (click)="savePermissions()">Salvar</button>
+</div>

@@ -1,0 +1,14 @@
+<div class="history-container">
+  <h2>Histórico</h2>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  <div *ngIf="!errorMessage && historyData.length > 0">
+    <ul>
+      <li *ngFor="let item of historyData">
+        <p><strong>Data:</strong> {{ item.date | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>Descrição:</strong> {{ item.description }}</p>
+      </li>
+    </ul>
+  </div>
+</div>

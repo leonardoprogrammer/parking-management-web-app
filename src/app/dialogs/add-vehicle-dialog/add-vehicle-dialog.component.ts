@@ -117,7 +117,10 @@ export class AddVehicleDialogComponent {
   onAdd(): void {
     if (this.vehicleForm.valid) {
       const entryDate = moment(this.vehicleForm.get('entryDate')!.value, 'DD/MM/YYYY').format('YYYY-MM-DD');
-      const entryTime = this.vehicleForm.get('entryTime')!.value;
+      let entryTime = this.vehicleForm.get('entryTime')!.value;
+      if (entryTime.length === 4) {
+        entryTime = `${entryTime.slice(0, 2)}:${entryTime.slice(2)}`;
+      }
       const entryDateTime = `${entryDate}T${entryTime}:00`;
 
       const vehicleData = {

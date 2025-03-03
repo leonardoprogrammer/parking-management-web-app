@@ -151,8 +151,8 @@ export class ManageParkingComponent implements OnInit {
       next: () => {
         this.router.navigate(['/dashboard']);
       },
-      error: () => {
-        // Handle error
+      error: (error) => {
+        console.log('Error:', error);
       },
     });
   }
@@ -161,11 +161,11 @@ export class ManageParkingComponent implements OnInit {
     this.router.navigate(['/dashboard']);
   }
 
-  viewSlots() {
-    // Lógica para visualizar vagas
+  viewHistory() {
+    this.router.navigate(['/history']);
   }
 
   viewEmployees() {
-    // Lógica para visualizar funcionários
+    this.router.navigate([`/manage/${this.parkingId}/employees`]);
   }
 }

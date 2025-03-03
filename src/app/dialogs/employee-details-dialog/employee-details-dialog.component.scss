@@ -1,0 +1,19 @@
+.employee-details-dialog-container {
+  max-width: 600px;
+  margin: auto;
+  text-align: left;
+  padding: 20px;
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 20px;
+  }
+
+  button {
+    margin-top: 20px;
+  }
+}

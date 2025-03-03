@@ -1,0 +1,27 @@
+.history-container {
+  max-width: 800px;
+  margin: auto;
+  text-align: left;
+  padding-top: 70px;
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 20px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+  }
+}
