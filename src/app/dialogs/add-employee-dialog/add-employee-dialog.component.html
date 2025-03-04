@@ -1,0 +1,43 @@
+<div class="add-employee-dialog-container">
+  <h2>Adicionar Funcionário</h2>
+  <form [formGroup]="searchForm" class="search-form">
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>E-mail</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>CPF</mat-label>
+      <input matInput formControlName="cpf">
+    </mat-form-field>
+  </form>
+  <div class="search-button-container">
+    <button mat-button type="button" (click)="searchUsers()">Pesquisar</button>
+  </div>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  <table *ngIf="searchResults.length > 0" class="results-table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>CPF</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of searchResults" (click)="selectUser(user)" [class.selected]="user === selectedUser">
+        <td>{{ user.userName }}</td>
+        <td>{{ user.userEmail }}</td>
+        <td>{{ user.userCpf }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="dialog-actions">
+    <button mat-button type="button" (click)="closeDialog()">Fechar</button>
+    <button mat-button type="button" (click)="addUser()" [disabled]="!selectedUser">Adicionar Usuário</button>
+  </div>
+</div>

@@ -5,12 +5,16 @@ import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 import { EmployeeDetailsDialogComponent } from '../../../dialogs/employee-details-dialog/employee-details-dialog.component';
+import { AddEmployeeDialogComponent } from '../../../dialogs/add-employee-dialog/add-employee-dialog.component';
+import { ConfirmRemoveEmployeeDialogComponent } from '../../../dialogs/confirm-remove-employee-dialog/confirm-remove-employee-dialog.component';
 
 @Component({
   selector: 'app-employees',
   standalone: true,
-  imports: [CommonModule, MatDialogModule],
+  imports: [CommonModule, MatDialogModule, MatSnackBarModule, MatIconModule],
   templateUrl: './employees.component.html',
   styleUrls: ['./employees.component.scss']
 })
@@ -26,7 +30,8 @@ export class EmployeesComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -73,6 +78,51 @@ export class EmployeesComponent implements OnInit {
   openEmployeeDetailsDialog(employeeId: string) {
     const dialogRef = this.dialog.open(EmployeeDetailsDialogComponent, {
       data: { employeeId }
+    });
+  }
+
+  openAddEmployeeDialog() {
+    const dialogRef = this.dialog.open(AddEmployeeDialogComponent, {
+      data: { parkingId: this.parkingId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.success) {
+        this.loadEmployees();
+      }
+    });
+  }
+
+  confirmRemoveEmployee(employeeId: string) {
+    const dialogRef = this.dialog.open(ConfirmRemoveEmployeeDialogComponent, {
+      data: { employeeId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.removeEmployee(employeeId);
+      }
+    });
+  }
+
+  removeEmployee(employeeId: string) {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const url = `http://localhost:8082/employee/${employeeId}`;
+
+    this.http.delete<any>(url, { headers }).subscribe({
+      next: () => {
+        this.snackBar.open('Funcionário removido com sucesso!', 'Fechar', {
+          duration: 3000,
+        });
+        this.loadEmployees();
+      },
+      error: (error) => {
+        this.errorMessage = 'Erro ao remover funcionário';
+        this.snackBar.open('Erro ao remover funcionário', 'Fechar', {
+          duration: 3000,
+        });
+      },
     });
   }
 }

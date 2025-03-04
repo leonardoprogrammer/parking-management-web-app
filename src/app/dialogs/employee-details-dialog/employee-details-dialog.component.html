@@ -1,5 +1,5 @@
 <div class="employee-details-dialog-container">
-  <h2>Detalhes do Funcionário</h2>
+  <h2 class="dialog-title">Detalhes do Funcionário</h2>
   <mat-tab-group>
     <mat-tab label="Detalhes">
       <div *ngIf="employeeDetails">
@@ -17,24 +17,26 @@
     <mat-tab *ngIf="employeeDetails?.permissions" label="Permissões">
       <div *ngIf="employeeDetails.permissions">
         <p>
-          <strong>Check-in de Veículos:</strong>
+          <strong>Check-in de veículos: </strong>
           <mat-slide-toggle [(ngModel)]="employeeDetails.permissions.canCheckinVehicle" (change)="enableSaveButton()">Sim</mat-slide-toggle>
         </p>
         <p>
-          <strong>Check-out de Veículos:</strong>
+          <strong>Check-out de veículos: </strong>
           <mat-slide-toggle [(ngModel)]="employeeDetails.permissions.canCheckoutVehicle" (change)="enableSaveButton()">Sim</mat-slide-toggle>
         </p>
         <p>
-          <strong>Adicionar Funcionários:</strong>
+          <strong>Adicionar funcionários: </strong>
           <mat-slide-toggle [(ngModel)]="employeeDetails.permissions.canAddEmployee" (change)="enableSaveButton()">Sim</mat-slide-toggle>
         </p>
         <p>
-          <strong>Editar Estacionamento:</strong>
+          <strong>Editar estacionamento: </strong>
           <mat-slide-toggle [(ngModel)]="employeeDetails.permissions.canEditParking" (change)="enableSaveButton()">Sim</mat-slide-toggle>
         </p>
       </div>
     </mat-tab>
   </mat-tab-group>
-  <button mat-button (click)="closeDialog()">Fechar</button>
-  <button mat-button *ngIf="employeeDetails?.permissions" [disabled]="!isSaveEnabled" (click)="savePermissions()">Salvar</button>
+  <div class="dialog-actions">
+    <button mat-button color="primary" (click)="closeDialog()">Fechar</button>
+    <button mat-button color="accent" *ngIf="employeeDetails?.permissions" [disabled]="!isSaveEnabled" (click)="savePermissions()">Salvar</button>
+  </div>
 </div>

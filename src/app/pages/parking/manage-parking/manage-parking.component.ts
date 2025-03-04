@@ -138,7 +138,7 @@ export class ManageParkingComponent implements OnInit {
             ...vehicle,
             checkinEmployeeName: data.checkinEmployeeName,
             checkinDate: data.checkinDate,
-            canCheckoutVehicle: this.canCheckoutVehicle // Passar a permissão para o diálogo
+            canCheckoutVehicle: this.canCheckoutVehicle
           }
         });
 
@@ -149,7 +149,7 @@ export class ManageParkingComponent implements OnInit {
         });
       },
       error: (error) => {
-        console.error("Error loading vehicle details:", error);
+        console.error('Erro ao carregar detalhes do veículo', error);
       }
     });
   }

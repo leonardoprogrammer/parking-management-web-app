@@ -7,11 +7,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-employee-details-dialog',
   standalone: true,
-  imports: [CommonModule, MatTabsModule, FormsModule, MatSlideToggleModule, MatSnackBarModule],
+  imports: [CommonModule, MatTabsModule, FormsModule, MatSlideToggleModule, MatSnackBarModule, MatIconModule, MatButtonModule],
   templateUrl: './employee-details-dialog.component.html',
   styleUrls: ['./employee-details-dialog.component.scss']
 })
@@ -74,6 +76,27 @@ export class EmployeeDetailsDialogComponent implements OnInit {
       error: (error) => {
         this.errorMessage = 'Erro ao salvar permissões';
         this.snackBar.open('Erro ao salvar permissões', 'Fechar', {
+          duration: 3000,
+        });
+      },
+    });
+  }
+
+  removeEmployee() {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const url = `http://localhost:8082/employee/${this.data.employeeId}`;
+
+    this.http.delete<any>(url, { headers }).subscribe({
+      next: () => {
+        this.snackBar.open('Funcionário removido com sucesso!', 'Fechar', {
+          duration: 3000,
+        });
+        this.closeDialog();
+      },
+      error: (error) => {
+        this.errorMessage = 'Erro ao remover funcionário';
+        this.snackBar.open('Erro ao remover funcionário', 'Fechar', {
           duration: 3000,
         });
       },

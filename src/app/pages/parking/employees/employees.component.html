@@ -5,7 +5,7 @@
   <div class="header">
     <div class="actions">
       <h3>Funcionários</h3>
-      <button *ngIf="canAddEmployee" class="add-employee-button">Adicionar</button>
+      <button *ngIf="canAddEmployee" class="add-employee-button" (click)="openAddEmployeeDialog()">Adicionar</button>
     </div>
   </div>
 
@@ -15,8 +15,13 @@
 
   <div *ngIf="!errorMessage && employees.length > 0" class="employee-list">
     <ul>
-      <li *ngFor="let employee of employees" (click)="openEmployeeDetailsDialog(employee.employeeId)">
-        <p>{{ employee.employeeName }}</p>
+      <li *ngFor="let employee of employees">
+        <div class="employee-info" (click)="openEmployeeDetailsDialog(employee.employeeId)">
+          <p>{{ employee.employeeName }}</p>
+        </div>
+        <button *ngIf="canAddEmployee" mat-icon-button color="warn" (click)="confirmRemoveEmployee(employee.employeeId)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </li>
     </ul>
   </div>
