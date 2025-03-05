@@ -1,0 +1,14 @@
+<h2>Alterar E-mail</h2>
+<form [formGroup]="changeEmailForm" (ngModelChange)="onFieldChange()">
+  <p>
+    <strong>Novo e-mail:</strong>
+    <input type="email" formControlName="newEmail" (input)="onFieldChange()" />
+    <span *ngIf="changeEmailForm.get('newEmail')?.invalid && changeEmailForm.get('newEmail')?.touched">
+      E-mail inválido.
+    </span>
+  </p>
+  <div class="buttons">
+    <button type="button" (click)="closeDialog()">Fechar</button>
+    <button type="button" (click)="saveEmail()" [disabled]="!isSaveEnabled">Salvar</button>
+  </div>
+</form>

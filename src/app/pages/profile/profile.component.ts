@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from '../../dialogs/change-password-dialog/change-password-dialog.component';
+import { ChangeEmailDialogComponent } from '../../dialogs/change-email-dialog/change-email-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -146,9 +147,10 @@ export class ProfileComponent implements OnInit {
   }
 
   changeEmail() {
-    // Lógica para alterar o e-mail
-    this.snackBar.open('Função de alterar e-mail não implementada', 'Fechar', {
-      duration: 3000,
+    const dialogRef = this.dialog.open(ChangeEmailDialogComponent, {
+      data: {
+        onSuccess: () => this.loadProfile()
+      }
     });
   }
 }
