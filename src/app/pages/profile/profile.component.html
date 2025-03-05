@@ -1,0 +1,41 @@
+<div class="profile-container" *ngIf="profile">
+  <h2>Perfil</h2>
+  <form [formGroup]="profileForm" (ngModelChange)="onFieldChange()">
+    <p>
+      <strong>Nome:</strong>
+      <input formControlName="userName" (input)="onFieldChange()" />
+    </p>
+    <p>
+      <strong>CPF:</strong>
+      <input formControlName="userCpf" readonly />
+    </p>
+    <p>
+      <strong>E-mail:</strong>
+      <input formControlName="userEmail" readonly />
+    </p>
+    <p>
+      <strong>Telefone:</strong>
+      <input formControlName="userTelephone" mask="(00) 00000-0000" (input)="onFieldChange()" />
+    </p>
+    <p>
+      <strong>Data do cadastro:</strong>
+      <input formControlName="createdAt" readonly />
+    </p>
+    <p>
+      <strong>Última alteração:</strong>
+      <input formControlName="updatedAt" readonly />
+    </p>
+    <div class="buttons">
+      <button type="button" (click)="enableEdit()" [disabled]="isEditEnabled">Editar</button>
+      <button type="button" (click)="cancelEdit()" [class.hidden]="!isEditEnabled">Cancelar</button>
+      <button type="button" (click)="saveProfile()" [disabled]="!isSaveEnabled">Salvar</button>
+    </div>
+    <div class="additional-buttons">
+      <button type="button" (click)="changePassword()">Alterar senha</button>
+      <button type="button" (click)="changeEmail()">Alterar e-mail</button>
+    </div>
+  </form>
+</div>
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>

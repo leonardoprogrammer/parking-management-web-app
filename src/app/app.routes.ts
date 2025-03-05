@@ -8,6 +8,7 @@ import { ResetPasswordComponent } from './pages/auth/reset-password/reset-passwo
 import { CreateParkingComponent } from './pages/parking/create-parking/create-parking.component';
 import { HistoryComponent } from './pages/parking/history/history.component';
 import { EmployeesComponent } from './pages/parking/employees/employees.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 import { authGuard } from './guards/auth-guard.service';
 import { noAuthGuard } from './guards/no-auth-guard.service';
 
@@ -22,5 +23,6 @@ export const routes: Routes = [
   { path: 'create-parking', component: CreateParkingComponent, canActivate: [authGuard] },
   { path: 'manage/:id/history', component: HistoryComponent, canActivate: [authGuard] },
   { path: 'manage/:id/employees', component: EmployeesComponent, canActivate: [authGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: 'login' },
 ];
