@@ -1,0 +1,95 @@
+.edit-parking-container {
+  max-width: 800px;
+  margin: auto;
+  text-align: left;
+  padding-top: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+
+    h2 {
+      margin: 0;
+      align-self: center;
+    }
+
+    .delete-button-container {
+      align-self: flex-end;
+      margin-bottom: 10px;
+    }
+
+    .delete-button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: #dc3545;
+      font-size: 24px;
+    }
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  p {
+    margin: 10px 0;
+    font-size: 16px;
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+  }
+
+  .last-updated {
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 10px;
+
+    small {
+      color: #666;
+      font-size: 12px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button[disabled] {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    button:not([disabled]) {
+      background-color: #007bff;
+      color: white;
+    }
+
+    button.hidden {
+      display: none;
+    }
+
+    button[type="button"]:nth-child(2) {
+      background-color: red;
+      color: white;
+    }
+  }
+}

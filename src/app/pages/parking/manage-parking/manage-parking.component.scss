@@ -2,7 +2,7 @@
   max-width: 800px;
   margin: auto;
   text-align: left;
-  padding-top: 70px; /* Ajuste conforme necessário para evitar a sobreposição */
+  padding-top: 70px;
 
   .header {
     display: flex;
@@ -34,10 +34,6 @@
     background-color: #007bff;
     color: white;
     border-radius: 4px;
-  }
-
-  .delete-button {
-    background-color: #dc3545;
   }
 
   .add-vehicle-button {

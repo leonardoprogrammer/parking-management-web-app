@@ -1,0 +1,28 @@
+<div class="edit-parking-container">
+  <div class="header">
+    <div class="delete-button-container">
+      <button class="delete-button" (click)="confirmDelete()">
+        <i class="material-icons">delete</i>
+      </button>
+    </div>
+    <h2>Editar Estacionamento</h2>
+  </div>
+  <form [formGroup]="parkingForm" (ngModelChange)="onFieldChange()">
+    <p>
+      <strong>Nome:</strong>
+      <input formControlName="parkingName" (input)="onFieldChange()" />
+    </p>
+    <p>
+      <strong>Endereço:</strong>
+      <input formControlName="parkingAddress" (input)="onFieldChange()" />
+    </p>
+    <div class="last-updated" *ngIf="lastUpdated">
+      <small>Última alteração: {{ lastUpdated }}</small>
+    </div>
+    <div class="buttons">
+      <button type="button" (click)="enableEdit()" [disabled]="isEditEnabled">Editar</button>
+      <button type="button" (click)="cancelEdit()" [class.hidden]="!isEditEnabled">Cancelar</button>
+      <button type="button" (click)="saveParking()" [disabled]="!isSaveEnabled">Salvar</button>
+    </div>
+  </form>
+</div>

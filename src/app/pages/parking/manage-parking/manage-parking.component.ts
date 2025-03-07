@@ -5,7 +5,6 @@ import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ParkingService } from '../../../services/parking.service';
 import { AuthService } from '../../../services/auth.service';
-import { ConfirmDeleteDialogComponent } from '../../../dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { AddVehicleDialogComponent } from '../../../dialogs/add-vehicle-dialog/add-vehicle-dialog.component';
 import { VehicleDetailsDialogComponent } from '../../../dialogs/vehicle-details-dialog/vehicle-details-dialog.component';
 
@@ -21,8 +20,8 @@ export class ManageParkingComponent implements OnInit {
   parkingData: any;
   parkedVehicles: any[] = [];
   isLoading = true;
-  isOwner = false;
   errorMessage: string | null = null;
+  canEditParking: boolean = false;
   canCheckinVehicle: boolean = false;
   canCheckoutVehicle: boolean = false;
 
@@ -51,7 +50,6 @@ export class ManageParkingComponent implements OnInit {
     this.parkingService.getParkingById(this.parkingId!, headers).subscribe({
       next: (data) => {
         this.parkingData = data;
-        this.isOwner = data.userCreatorId === userId;
         this.isLoading = false;
       },
       error: () => {
@@ -87,6 +85,7 @@ export class ManageParkingComponent implements OnInit {
 
     this.http.get<any>(url, { headers }).subscribe({
       next: (data) => {
+        this.canEditParking = data.canEditParking;
         this.canCheckinVehicle = data.canCheckinVehicle;
         this.canCheckoutVehicle = data.canCheckoutVehicle;
       },
@@ -154,38 +153,15 @@ export class ManageParkingComponent implements OnInit {
     });
   }
 
-  confirmDelete() {
-    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.deleteParking();
-      }
-    });
-  }
-
-  deleteParking() {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.parkingService.deleteParkingById(this.parkingId!, headers).subscribe({
-      next: () => {
-        this.router.navigate(['/dashboard']);
-      },
-      error: (error) => {
-        console.log('Error:', error);
-      },
-    });
-  }
-
-  goBack() {
-    this.router.navigate(['/dashboard']);
-  }
-
   viewHistory() {
     this.router.navigate([`/manage/${this.parkingId}/history`]);
   }
 
   viewEmployees() {
     this.router.navigate([`/manage/${this.parkingId}/employees`]);
+  }
+
+  editParking() {
+    this.router.navigate([`/manage/${this.parkingId}/edit`]);
   }
 }

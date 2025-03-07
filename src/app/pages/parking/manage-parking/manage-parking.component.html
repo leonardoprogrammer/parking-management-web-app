@@ -7,7 +7,7 @@
     <div class="actions">
       <button (click)="viewHistory()">Histórico</button>
       <button (click)="viewEmployees()">Funcionários</button>
-      <button *ngIf="isOwner" class="delete-button" (click)="confirmDelete()">Apagar Estacionamento</button>
+      <button *ngIf="canEditParking" (click)="editParking()">Editar Estacionamento</button>
     </div>
   </div>
 
