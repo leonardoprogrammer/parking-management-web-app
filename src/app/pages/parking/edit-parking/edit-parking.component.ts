@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ParkingService } from '../../../services/parking.service';
 import { AuthService } from '../../../services/auth.service';
 import { ConfirmDeleteDialogComponent } from '../../../dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
+import { EditParkingSettingsComponent } from '../../../dialogs/edit-parking-settings/edit-parking-settings.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { formatDate } from '@angular/common';
@@ -153,6 +154,20 @@ export class EditParkingComponent implements OnInit {
       error: (error) => {
         console.log('Error:', error);
       },
+    });
+  }
+
+  editSettings() {
+    const dialogRef = this.dialog.open(EditParkingSettingsComponent, {
+      data: { parkingId: this.parkingId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.snackBar.open('Configurações atualizadas com sucesso!', 'Fechar', {
+          duration: 3000,
+        });
+      }
     });
   }
 }

@@ -92,4 +92,18 @@
       color: white;
     }
   }
+
+  .additional-buttons {
+    margin-top: 20px;
+
+    button {
+      width: 100%;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #d3d3d3;
+      color: black;
+    }
+  }
 }

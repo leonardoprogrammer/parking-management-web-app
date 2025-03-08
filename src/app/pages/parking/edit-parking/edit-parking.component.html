@@ -24,5 +24,8 @@
       <button type="button" (click)="cancelEdit()" [class.hidden]="!isEditEnabled">Cancelar</button>
       <button type="button" (click)="saveParking()" [disabled]="!isSaveEnabled">Salvar</button>
     </div>
+    <div class="additional-buttons">
+      <button type="button" (click)="editSettings()">Editar Configurações</button>
+    </div>
   </form>
 </div>
