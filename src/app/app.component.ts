@@ -8,11 +8,12 @@ import { HeaderComponent } from './header/header.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HttpClientModule, CommonModule, HeaderComponent, MatDialogModule, ConfirmDeleteDialogComponent, NgxMaskDirective],
+  imports: [RouterOutlet, HttpClientModule, CommonModule, HeaderComponent, MatDialogModule, ConfirmDeleteDialogComponent, NgxMaskDirective, CurrencyMaskModule],
   providers: [provideNgxMask()],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

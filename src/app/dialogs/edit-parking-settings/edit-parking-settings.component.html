@@ -1,23 +1,23 @@
-<p>edit-parking-settings works!</p>
-<h2>Editar Configurações do Estacionamento</h2>
+<h2>Editar Configurações</h2>
 <form [formGroup]="settingsForm" (ngModelChange)="onFieldChange()">
-  <p>
+  <p class="checkbox-container">
     <strong>Cobrar a partir do check-in?</strong>
     <input type="checkbox" formControlName="chargeFromCheckIn" />
   </p>
-  <p>
+  <p *ngIf="!settingsForm.get('chargeFromCheckIn')?.value">
     <strong>Tempo mínimo de cobrança:</strong>
-    <input type="text" formControlName="minimumTimeToCharge" placeholder="00:00" />
+    <input type="text" formControlName="minimumTimeToCharge" placeholder="00:00:00" mask="00:00:00" />
   </p>
   <p>
     <strong>Período de cobrança:</strong>
-    <input type="text" formControlName="period" placeholder="00:00" />
+    <input type="text" formControlName="period" placeholder="00:00:00" mask="00:00:00" />
   </p>
   <p>
     <strong>Valor por período:</strong>
-    <input type="text" formControlName="valuePerPeriod" placeholder="R$ 00,00" />
+    <input currencyMask type="text" formControlName="valuePerPeriod" placeholder="R$ 00,00" [options]="{prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left', allowNegative: false}" />
   </p>
   <div class="buttons">
+    <button type="button" class="cancel-button" (click)="cancel()">Cancelar</button>
     <button type="button" *ngIf="isCreateMode" (click)="createSettings()">Criar configurações</button>
     <button type="button" (click)="saveSettings()" [disabled]="!isSaveEnabled">Salvar</button>
   </div>
