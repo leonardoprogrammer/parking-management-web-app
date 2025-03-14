@@ -6,15 +6,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { provideNgxMask } from 'ngx-mask';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HttpClientModule, CommonModule, HeaderComponent, MatDialogModule, ConfirmDeleteDialogComponent, NgxMaskDirective, CurrencyMaskModule],
-  providers: [provideNgxMask()],
+  imports: [RouterOutlet, HttpClientModule, CommonModule, HeaderComponent, MatDialogModule, CurrencyMaskModule],
+  providers: [provideNgxMask(), Title],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

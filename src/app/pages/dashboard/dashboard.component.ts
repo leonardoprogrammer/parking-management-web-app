@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,9 +16,10 @@ export class DashboardComponent implements OnInit {
   parkings: any[] = [];
   isLoading = true;
 
-  constructor(private http: HttpClient, private authService: AuthService, public router: Router) {}
+  constructor(private http: HttpClient, private authService: AuthService, public router: Router, private titleService: Title) {}
 
   ngOnInit() {
+    this.titleService.setTitle('Dashboard | Gerenciador de Estacionamento');
     this.loadParkings();
   }
 

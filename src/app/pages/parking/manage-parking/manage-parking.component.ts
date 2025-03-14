@@ -7,6 +7,7 @@ import { ParkingService } from '../../../services/parking.service';
 import { AuthService } from '../../../services/auth.service';
 import { AddVehicleDialogComponent } from '../../../dialogs/add-vehicle-dialog/add-vehicle-dialog.component';
 import { VehicleDetailsDialogComponent } from '../../../dialogs/vehicle-details-dialog/vehicle-details-dialog.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-manage-parking',
@@ -31,7 +32,8 @@ export class ManageParkingComponent implements OnInit {
     private parkingService: ParkingService,
     private authService: AuthService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
@@ -45,12 +47,12 @@ export class ManageParkingComponent implements OnInit {
 
   loadParkingDetails() {
     const token = this.authService.getToken();
-    const userId = this.authService.getUserId();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.parkingService.getParkingById(this.parkingId!, headers).subscribe({
       next: (data) => {
         this.parkingData = data;
         this.isLoading = false;
+        this.titleService.setTitle(this.parkingData.name + ' | Gerenciador de Estacionamento');
       },
       error: () => {
         this.isLoading = false;

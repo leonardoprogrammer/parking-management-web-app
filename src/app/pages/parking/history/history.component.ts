@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { HistoryDetailsDialogComponent } from '../../../dialogs/history-details-dialog/history-details-dialog.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-history',
@@ -20,9 +21,10 @@ export class HistoryComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
 
-  constructor(private http: HttpClient, private authService: AuthService, private route: ActivatedRoute, public dialog: MatDialog) {}
+  constructor(private http: HttpClient, private authService: AuthService, private route: ActivatedRoute, public dialog: MatDialog, private titleService: Title) {}
 
   ngOnInit() {
+    this.titleService.setTitle('Histórico | Gerenciador de Estacionamento');
     this.parkingId = this.getParkingIdFromRoute();
     if (this.parkingId) {
       this.loadHistory(this.currentPage);

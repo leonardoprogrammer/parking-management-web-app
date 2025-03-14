@@ -8,6 +8,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from '../../dialogs/change-password-dialog/change-password-dialog.component';
 import { ChangeEmailDialogComponent } from '../../dialogs/change-email-dialog/change-email-dialog.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +31,8 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private titleService: Title
   ) {
     this.profileForm = this.fb.group({
       userName: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(3)]],
@@ -43,6 +45,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Perfil | Gerenciador de Estacionamento');
     this.loadProfile();
   }
 

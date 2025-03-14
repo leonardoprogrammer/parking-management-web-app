@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { EmployeeDetailsDialogComponent } from '../../../dialogs/employee-details-dialog/employee-details-dialog.component';
 import { AddEmployeeDialogComponent } from '../../../dialogs/add-employee-dialog/add-employee-dialog.component';
 import { ConfirmRemoveEmployeeDialogComponent } from '../../../dialogs/confirm-remove-employee-dialog/confirm-remove-employee-dialog.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-employees',
@@ -31,10 +32,12 @@ export class EmployeesComponent implements OnInit {
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
+    this.titleService.setTitle('Funcionários | Gerenciador de Estacionamento');
     this.parkingId = this.route.snapshot.paramMap.get('id');
     if (this.parkingId) {
       this.checkPermissions();

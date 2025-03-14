@@ -5,6 +5,7 @@ import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http'
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { ParkingService } from '../../../services/parking.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-parking',
@@ -23,8 +24,10 @@ export class CreateParkingComponent {
     private parkingService: ParkingService,
     private authService: AuthService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private titleService: Title
   ) {
+    this.titleService.setTitle('Criar Estacionamento | Gerenciador de Estacionamento');
     this.parkingForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       address: ['', [Validators.required, Validators.minLength(5)]],

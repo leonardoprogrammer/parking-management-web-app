@@ -10,6 +10,7 @@ import { EditParkingSettingsComponent } from '../../../dialogs/edit-parking-sett
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { formatDate } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-parking',
@@ -35,7 +36,8 @@ export class EditParkingComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private titleService: Title
   ) {
     this.parkingForm = this.fb.group({
       parkingName: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(3)]],
@@ -44,6 +46,7 @@ export class EditParkingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Editar Estacionamento | Gerenciador de Estacionamento');
     this.parkingId = this.route.snapshot.paramMap.get('id');
     if (this.parkingId) {
       this.loadParkingDetails();
