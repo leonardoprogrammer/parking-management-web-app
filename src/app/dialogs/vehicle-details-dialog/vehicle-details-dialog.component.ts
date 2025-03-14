@@ -9,55 +9,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule, DatePipe } from '@angular/common';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @Component({
   selector: 'app-vehicle-details-dialog',
-  template: `
-    <h2 mat-dialog-title>Detalhes do Veículo</h2>
-    <mat-dialog-content>
-      <form [formGroup]="vehicleForm">
-        <mat-form-field>
-          <mat-label>Placa</mat-label>
-          <input matInput formControlName="plate" readonly>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Modelo</mat-label>
-          <input matInput formControlName="model" readonly>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Cor</mat-label>
-          <input matInput formControlName="color" readonly>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Vaga</mat-label>
-          <input matInput formControlName="space" readonly>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Data de Entrada</mat-label>
-          <input matInput formControlName="entryDate" readonly>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Hora de Entrada</mat-label>
-          <input matInput formControlName="entryTime" readonly>
-        </mat-form-field>
-        <mat-checkbox *ngIf="canCheckoutVehicle" formControlName="paid">Pago</mat-checkbox>
-        <mat-form-field *ngIf="canCheckoutVehicle && vehicleForm.get('paid')?.value">
-          <mat-label>Método de Pagamento</mat-label>
-          <input matInput formControlName="paymentMethod" required>
-        </mat-form-field>
-      </form>
-      <div class="additional-info">
-        <p><strong>Adicionado pelo funcionário:</strong> {{ data.checkinEmployeeName }}</p>
-        <p><strong>Adicionado em:</strong> {{ formatDateWithTime(data.checkinDate) }}</p>
-      </div>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-button (click)="onCancel()">Fechar</button>
-      <button *ngIf="canCheckoutVehicle" mat-button color="primary" (click)="onCheckout()" [disabled]="vehicleForm.invalid">Checkout</button>
-    </mat-dialog-actions>
-  `,
+  templateUrl: './vehicle-details-dialog.component.html',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule, MatInputModule, MatCheckboxModule, ReactiveFormsModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, MatInputModule, MatCheckboxModule, ReactiveFormsModule, CurrencyMaskModule],
   providers: [DatePipe]
 })
 export class VehicleDetailsDialogComponent implements AfterViewInit {
@@ -82,6 +40,7 @@ export class VehicleDetailsDialogComponent implements AfterViewInit {
       entryDate: [this.formatDate(data.entryDate)],
       entryTime: [data.entryDate.split('T')[1].substring(0, 5)],
       paid: [false],
+      amountToPay: [data.amountToPay],
       paymentMethod: ['']
     });
   }
@@ -110,6 +69,7 @@ export class VehicleDetailsDialogComponent implements AfterViewInit {
         checkoutDate: localDate,
         checkoutEmployeeId: userId,
         paid: this.vehicleForm.get('paid')?.value,
+        amountPaid: this.vehicleForm.get('amountToPay')?.value,
         paymentMethod: this.vehicleForm.get('paid')?.value ? this.vehicleForm.get('paymentMethod')?.value : null
       };
 

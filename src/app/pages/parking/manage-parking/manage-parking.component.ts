@@ -137,6 +137,7 @@ export class ManageParkingComponent implements OnInit {
             ...vehicle,
             checkinEmployeeName: data.checkinEmployeeName,
             checkinDate: data.checkinDate,
+            amountToPay: data.amountToPay,
             canCheckoutVehicle: this.canCheckoutVehicle
           }
         });

@@ -12,6 +12,7 @@
     <p><strong>Funcionário do Check-out:</strong> {{ vehicleDetails.checkoutEmployeeName }}</p>
     <p><strong>Pago?</strong> {{ vehicleDetails.paid ? 'Sim' : 'Não' }}</p>
     <p><strong>Método de Pagamento:</strong> {{ vehicleDetails.paymentMethod }}</p>
+    <p><strong>Valor pago:</strong> {{ vehicleDetails.amountPaid }}</p>
   </div>
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
