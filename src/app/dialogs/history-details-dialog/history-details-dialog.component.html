@@ -5,14 +5,14 @@
     <p><strong>Modelo:</strong> {{ vehicleDetails.model }}</p>
     <p><strong>Cor:</strong> {{ vehicleDetails.color }}</p>
     <p><strong>Vaga:</strong> {{ vehicleDetails.space }}</p>
-    <p><strong>Data da Entrada:</strong> {{ vehicleDetails.entryDate | date: 'dd/MM/yyyy HH:mm' }}</p>
-    <p><strong>Data do Registro:</strong> {{ vehicleDetails.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
-    <p><strong>Funcionário do Check-in:</strong> {{ vehicleDetails.checkinEmployeeName }}</p>
-    <p><strong>Data da Saída:</strong> {{ vehicleDetails.checkoutDate | date: 'dd/MM/yyyy HH:mm' }}</p>
-    <p><strong>Funcionário do Check-out:</strong> {{ vehicleDetails.checkoutEmployeeName }}</p>
+    <p><strong>Data da entrada:</strong> {{ vehicleDetails.entryDate | date: 'dd/MM/yyyy HH:mm' }}</p>
+    <p><strong>Data do check-in:</strong> {{ vehicleDetails.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+    <p><strong>Funcionário do check-in:</strong> {{ vehicleDetails.checkinEmployeeName }}</p>
+    <p><strong>Data do check-out:</strong> {{ vehicleDetails.checkoutDate | date: 'dd/MM/yyyy HH:mm' }}</p>
+    <p><strong>Funcionário do check-out:</strong> {{ vehicleDetails.checkoutEmployeeName }}</p>
     <p><strong>Pago?</strong> {{ vehicleDetails.paid ? 'Sim' : 'Não' }}</p>
-    <p><strong>Método de Pagamento:</strong> {{ vehicleDetails.paymentMethod }}</p>
     <p><strong>Valor pago:</strong> {{ vehicleDetails.amountPaid }}</p>
+    <p><strong>Método do pagamento:</strong> {{ vehicleDetails.paymentMethod }}</p>
   </div>
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}

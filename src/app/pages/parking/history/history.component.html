@@ -9,9 +9,9 @@
         <p><strong>Placa:</strong> {{ item.plate }}</p>
         <p><strong>Modelo:</strong> {{ item.model }}</p>
         <p><strong>Cor:</strong> {{ item.color }}</p>
-        <p><strong>Data de Entrada:</strong> {{ item.entryDate | date: 'dd/MM/yyyy HH:mm' }}</p>
-        <p><strong>Data de Criação:</strong> {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
-        <p><strong>Check-out:</strong> {{ item.checkedOut ? 'Sim' : 'Não' }}</p>
+        <p><strong>Data da entrada:</strong> {{ item.entryDate | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>Data do check-in:</strong> {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>Check-out?</strong> {{ item.checkedOut ? 'Sim' : 'Não' }}</p>
       </li>
     </ul>
     <div class="pagination">

@@ -2,7 +2,6 @@
   <h2>Cadastro</h2>
 
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <!-- Nome e CPF na mesma linha -->
     <div class="form-row">
       <div class="form-group">
         <label for="name">Nome:</label>
@@ -21,7 +20,6 @@
       </div>
     </div>
 
-    <!-- E-mail e Telefone na mesma linha -->
     <div class="form-row">
       <div class="form-group">
         <label for="email">E-mail:</label>
@@ -40,7 +38,6 @@
       </div>
     </div>
 
-    <!-- Senha e Confirmar Senha na mesma linha -->
     <div class="form-row">
       <div class="form-group">
         <label for="password">Senha:</label>
@@ -51,7 +48,7 @@
       </div>
 
       <div class="form-group">
-        <label for="confirmPassword">Confirmar Senha:</label>
+        <label for="confirmPassword">Confirmar senha:</label>
         <input id="confirmPassword" type="password" formControlName="confirmPassword" required />
         <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched">
           <small>As senhas não coincidem.</small>

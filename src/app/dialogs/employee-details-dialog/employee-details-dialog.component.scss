@@ -36,4 +36,9 @@
     background-color: #007bff;
     color: white;
   }
+
+  button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 }
