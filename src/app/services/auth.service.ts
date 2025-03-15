@@ -9,15 +9,17 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   private apiUrl = 'http://localhost:8081/auth';
   private tokenKey = 'auth_token';
+  private refreshTokenKey = 'refresh_token';
   private userIdKey = 'user_id';
   private isAuthenticated = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(private http: HttpClient) {}
 
   login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post<{ token: string, userId: string }>(`${this.apiUrl}/login`, credentials).pipe(
+    return this.http.post<{ accessToken: string, refreshToken: string, userId: string }>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
-        localStorage.setItem(this.tokenKey, response.token);
+        localStorage.setItem(this.tokenKey, response.accessToken);
+        localStorage.setItem(this.refreshTokenKey, response.refreshToken);
         localStorage.setItem(this.userIdKey, response.userId);
         this.isAuthenticated.next(true);
       })
@@ -30,6 +32,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.refreshTokenKey);
     localStorage.removeItem(this.userIdKey);
     this.isAuthenticated.next(false);
   }
