@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -9,6 +9,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { EmployeeService } from '../../services/employee/employee.service';
+import { EmployeePermissionsService } from '../../services/employee-permissions/employee-permissions.service';
 
 @Component({
   selector: 'app-employee-details-dialog',
@@ -25,9 +27,10 @@ export class EmployeeDetailsDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<EmployeeDetailsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private http: HttpClient,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private employeeService: EmployeeService,
+    private employeePermissionsService: EmployeePermissionsService
   ) {}
 
   ngOnInit() {
@@ -37,9 +40,8 @@ export class EmployeeDetailsDialogComponent implements OnInit {
   loadEmployeeDetails() {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8082/employee/${this.data.employeeId}`;
 
-    this.http.get<any>(url, { headers }).subscribe({
+    this.employeeService.getEmployeeDetails(this.data.employeeId, headers).subscribe({
       next: (data) => {
         this.employeeDetails = data;
         this.errorMessage = null;
@@ -57,7 +59,6 @@ export class EmployeeDetailsDialogComponent implements OnInit {
   savePermissions() {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8082/employee-permissions?employeeId=${this.employeeDetails.employeeId}`;
     const body = {
       canCheckinVehicle: this.employeeDetails.permissions.canCheckinVehicle,
       canCheckoutVehicle: this.employeeDetails.permissions.canCheckoutVehicle,
@@ -65,7 +66,7 @@ export class EmployeeDetailsDialogComponent implements OnInit {
       canEditParking: this.employeeDetails.permissions.canEditParking
     };
 
-    this.http.put<any>(url, body, { headers }).subscribe({
+    this.employeePermissionsService.updateEmployeePermissions(this.employeeDetails.employeeId, body, headers).subscribe({
       next: (data) => {
         this.isSaveEnabled = false;
         this.snackBar.open('Permissões salvas com sucesso!', 'Fechar', {
@@ -85,9 +86,8 @@ export class EmployeeDetailsDialogComponent implements OnInit {
   removeEmployee() {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8082/employee/${this.data.employeeId}`;
 
-    this.http.delete<any>(url, { headers }).subscribe({
+    this.employeeService.removeEmployee(this.data.employeeId, headers).subscribe({
       next: () => {
         this.snackBar.open('Funcionário removido com sucesso!', 'Fechar', {
           duration: 3000,

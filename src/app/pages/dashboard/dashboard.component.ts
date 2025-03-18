@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { ParkingService } from '../../services/parking.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,12 @@ export class DashboardComponent implements OnInit {
   parkings: any[] = [];
   isLoading = true;
 
-  constructor(private http: HttpClient, private authService: AuthService, public router: Router, private titleService: Title) {}
+  constructor(
+    private authService: AuthService,
+    private parkingService: ParkingService,
+    public router: Router,
+    private titleService: Title
+  ) {}
 
   ngOnInit() {
     this.titleService.setTitle('Dashboard | Gerenciador de Estacionamento');
@@ -27,9 +33,8 @@ export class DashboardComponent implements OnInit {
     const userId = this.authService.getUserId();
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8082/parking/user/${userId}`;
 
-    this.http.get<any[]>(url, { headers }).subscribe({
+    this.parkingService.getParkingsByUserId(userId!, headers).subscribe({
       next: (data) => {
         this.parkings = data;
         this.isLoading = false;

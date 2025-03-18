@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { ParkingService } from '../../../services/parking.service';
@@ -30,7 +30,6 @@ export class EditParkingComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient,
     private parkingService: ParkingService,
     private authService: AuthService,
     private router: Router,
@@ -56,9 +55,8 @@ export class EditParkingComponent implements OnInit {
   loadParkingDetails() {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8082/parking/${this.parkingId}`;
 
-    this.http.get<any>(url, { headers }).subscribe({
+    this.parkingService.getParkingById(this.parkingId!, headers).subscribe({
       next: (data) => {
         this.parkingData = data;
         this.parkingForm.patchValue({
@@ -111,13 +109,12 @@ export class EditParkingComponent implements OnInit {
 
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8082/parking/${this.parkingId}`;
     const body = {
       parkingName: this.parkingForm.get('parkingName')?.value,
       parkingAddress: this.parkingForm.get('parkingAddress')?.value
     };
 
-    this.http.put<any>(url, body, { headers }).subscribe({
+    this.parkingService.updateParking(this.parkingId!, body, headers).subscribe({
       next: () => {
         this.snackBar.open('Informações alteradas com sucesso!', 'Fechar', {
           duration: 3000,

@@ -1,11 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { UsersService } from '../../services/users/users.service';
 
 @Component({
   selector: 'app-change-email-dialog',
@@ -22,8 +23,8 @@ export class ChangeEmailDialogComponent {
     private authService: AuthService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<ChangeEmailDialogComponent>,
-    private http: HttpClient,
     private snackBar: MatSnackBar,
+    private usersService: UsersService,
     @Inject(MAT_DIALOG_DATA) public data: { onSuccess: () => void }
   ) {
     this.changeEmailForm = this.fb.group({
@@ -47,12 +48,11 @@ export class ChangeEmailDialogComponent {
 
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = 'http://localhost:8081/users/changeCurrentUserEmail';
     const body = {
       newEmail: this.changeEmailForm.get('newEmail')?.value
     };
 
-    this.http.put<any>(url, body, { headers }).subscribe({
+    this.usersService.changeCurrentUserEmail(body, headers).subscribe({
       next: (response) => {
         this.snackBar.open('E-mail alterado com sucesso!', 'Fechar', {
           duration: 3000,

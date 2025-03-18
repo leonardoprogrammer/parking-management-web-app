@@ -6,10 +6,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { ParkedVehicleService } from '../../services/parked-vehicle/parked-vehicle.service';
 
 @Component({
   selector: 'app-vehicle-details-dialog',
@@ -26,10 +27,10 @@ export class VehicleDetailsDialogComponent implements AfterViewInit {
     public dialogRef: MatDialogRef<VehicleDetailsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private http: HttpClient,
     private authService: AuthService,
     private cdr: ChangeDetectorRef,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private parkedVehicleService: ParkedVehicleService
   ) {
     this.canCheckoutVehicle = data.canCheckoutVehicle;
     this.vehicleForm = this.fb.group({
@@ -73,7 +74,7 @@ export class VehicleDetailsDialogComponent implements AfterViewInit {
         paymentMethod: this.vehicleForm.get('paid')?.value ? this.vehicleForm.get('paymentMethod')?.value : null
       };
 
-      this.http.post<any>('http://localhost:8083/parked-vehicle/checkout', body, { headers }).subscribe({
+      this.parkedVehicleService.checkoutVehicle(body, headers).subscribe({
         next: () => {
           this.dialogRef.close({ success: true, id: this.data.id });
         },

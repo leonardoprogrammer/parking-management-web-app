@@ -1,8 +1,30 @@
 {
-  // For more information, visit: https://go.microsoft.com/fwlink/?LinkId=733558
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "ng serve",
+      "type": "shell",
+      "command": "ng serve",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": "$tsc",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": {
+            "regexp": ".*"
+          },
+          "endsPattern": {
+            "regexp": "Compiled successfully."
+          }
+        }
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "npm: start",
       "type": "npm",
       "script": "start",
       "isBackground": true,
@@ -12,15 +34,19 @@
         "background": {
           "activeOnStart": true,
           "beginsPattern": {
-            "regexp": "(.*?)"
+            "regexp": ".*"
           },
           "endsPattern": {
-            "regexp": "bundle generation complete"
+            "regexp": "Compiled successfully."
           }
         }
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
       }
     },
     {
+      "label": "npm: test",
       "type": "npm",
       "script": "test",
       "isBackground": true,
@@ -30,12 +56,15 @@
         "background": {
           "activeOnStart": true,
           "beginsPattern": {
-            "regexp": "(.*?)"
+            "regexp": ".*"
           },
           "endsPattern": {
-            "regexp": "bundle generation complete"
+            "regexp": "Compiled successfully."
           }
         }
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
       }
     }
   ]

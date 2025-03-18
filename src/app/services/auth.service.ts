@@ -18,9 +18,11 @@ export class AuthService {
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post<{ accessToken: string, refreshToken: string, userId: string }>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
-        localStorage.setItem(this.tokenKey, response.accessToken);
-        localStorage.setItem(this.refreshTokenKey, response.refreshToken);
-        localStorage.setItem(this.userIdKey, response.userId);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(this.tokenKey, response.accessToken);
+          localStorage.setItem(this.refreshTokenKey, response.refreshToken);
+          localStorage.setItem(this.userIdKey, response.userId);
+        }
         this.isAuthenticated.next(true);
       })
     );
@@ -31,9 +33,11 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.refreshTokenKey);
-    localStorage.removeItem(this.userIdKey);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(this.tokenKey);
+      localStorage.removeItem(this.refreshTokenKey);
+      localStorage.removeItem(this.userIdKey);
+    }
     this.isAuthenticated.next(false);
   }
 
@@ -42,6 +46,13 @@ export class AuthService {
       return null;
     }
     return localStorage.getItem(this.tokenKey);
+  }
+
+  getRefreshToken(): string | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+    return localStorage.getItem(this.refreshTokenKey);
   }
 
   getUserId(): string | null {
@@ -60,6 +71,20 @@ export class AuthService {
   }
 
   setToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(this.tokenKey, token);
+    }
+  }
+
+  refreshToken(): Observable<{ accessToken: string }> {
+    console.log('Calling refreshToken'); // Adicione este log
+    const refreshToken = this.getRefreshToken();
+    return this.http.post<{ accessToken: string }>(`${this.apiUrl}/refresh-token`, { refreshToken }).pipe(
+      tap(response => {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(this.tokenKey, response.accessToken);
+        }
+      })
+    );
   }
 }

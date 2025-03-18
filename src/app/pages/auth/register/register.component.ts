@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,12 @@ export class RegisterComponent {
   isLoading = false;
   errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient, private titleService: Title) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private titleService: Title
+  ) {
     this.titleService.setTitle('Cadastro | Gerenciador de Estacionamento');
     this.registerForm = this.fb.group(
       {
@@ -48,7 +54,7 @@ export class RegisterComponent {
 
     const { confirmPassword, ...userData } = this.registerForm.value;
 
-    this.http.post('http://localhost:8081/auth/register', userData).subscribe({
+    this.authService.register(userData).subscribe({
       next: (response) => {
         console.log('Cadastro realizado com sucesso:', response);
         this.isLoading = false;

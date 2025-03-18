@@ -14,12 +14,20 @@ export class ParkingService {
     return this.http.get(`${this.apiUrl}/${parkingId}`, { headers });
   }
 
-  createParking(parkingData: any, token: string): Observable<any> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  getParkingsByUserId(userId: string, headers: HttpHeaders): Observable<any[]> {
+    const url = `${this.apiUrl}/user/${userId}`;
+    return this.http.get<any[]>(url, { headers });
+  }
+
+  createParking(parkingData: any, headers: HttpHeaders): Observable<any> {
     return this.http.post(this.apiUrl, parkingData, { headers });
   }
 
   deleteParkingById(parkingId: string, headers: HttpHeaders): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${parkingId}`, { headers });
+  }
+
+  updateParking(parkingId: string, body: any, headers: HttpHeaders): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${parkingId}`, body, { headers });
   }
 }

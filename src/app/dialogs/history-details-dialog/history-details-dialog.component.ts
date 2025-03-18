@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { ParkedVehicleService } from '../../services/parked-vehicle/parked-vehicle.service';
 
 @Component({
   selector: 'app-history-details-dialog',
@@ -20,8 +21,8 @@ export class HistoryDetailsDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<HistoryDetailsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private parkedVehicleService: ParkedVehicleService
   ) {}
 
   ngOnInit() {
@@ -31,9 +32,8 @@ export class HistoryDetailsDialogComponent implements OnInit {
   loadVehicleDetails() {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8083/parked-vehicle/${this.data.parkedVehicleId}`;
 
-    this.http.get<any>(url, { headers }).subscribe({
+    this.parkedVehicleService.getVehicleDetails(this.data.parkedVehicleId, headers).subscribe({
       next: (data) => {
         this.vehicleDetails = data;
         this.errorMessage = null;

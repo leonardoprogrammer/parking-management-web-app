@@ -14,7 +14,10 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, HttpClientModule, CommonModule, HeaderComponent, MatDialogModule, CurrencyMaskModule],
-  providers: [provideNgxMask(), Title],
+  providers: [
+    provideNgxMask(),
+    Title
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
+import { UsersService } from '../../services/users/users.service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -27,8 +28,8 @@ export class ProfileComponent implements OnInit {
   isSaveEnabled: boolean = false;
 
   constructor(
-    private http: HttpClient,
     private authService: AuthService,
+    private usersService: UsersService,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -52,9 +53,7 @@ export class ProfileComponent implements OnInit {
   loadProfile() {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = 'http://localhost:8081/users/currentUser';
-
-    this.http.get<any>(url, { headers }).subscribe({
+    this.usersService.getCurrentUser(headers).subscribe({
       next: (data) => {
         this.profile = data;
         this.originalProfile = { ...data };
@@ -115,13 +114,12 @@ export class ProfileComponent implements OnInit {
   saveProfile() {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = 'http://localhost:8081/users/currentUser';
     const body = {
       name: this.profileForm.get('userName')?.value,
       telephone: this.profileForm.get('userTelephone')?.value.replace(/\D/g, '')
     };
 
-    this.http.put<any>(url, body, { headers }).subscribe({
+    this.usersService.updateUserProfile(headers, body).subscribe({
       next: () => {
         this.snackBar.open('Informações alteradas com sucesso!', 'Fechar', {
           duration: 3000,

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { HistoryDetailsDialogComponent } from '../../../dialogs/history-details-dialog/history-details-dialog.component';
 import { Title } from '@angular/platform-browser';
+import { ParkedVehicleService } from '../../../services/parked-vehicle/parked-vehicle.service';
 
 @Component({
   selector: 'app-history',
@@ -21,7 +22,13 @@ export class HistoryComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
 
-  constructor(private http: HttpClient, private authService: AuthService, private route: ActivatedRoute, public dialog: MatDialog, private titleService: Title) {}
+  constructor(
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private titleService: Title,
+    private parkedVehicleService: ParkedVehicleService
+  ) {}
 
   ngOnInit() {
     this.titleService.setTitle('Histórico | Gerenciador de Estacionamento');
@@ -38,9 +45,8 @@ export class HistoryComponent implements OnInit {
   loadHistory(page: number) {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8083/parked-vehicle/history?parkingId=${this.parkingId}&page=${page}&sizePage=6`;
 
-    this.http.get<any>(url, { headers }).subscribe({
+    this.parkedVehicleService.getHistory(this.parkingId!, page, 6, headers).subscribe({
       next: (data) => {
         this.historyData = data.content;
         this.totalPages = data.totalPages;

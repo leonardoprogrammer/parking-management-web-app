@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { ResetPasswordService } from '../../../services/reset-password/reset-password.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -16,7 +17,11 @@ export class ForgotPasswordComponent {
   isLoading = false;
   message: string | null = null;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private titleService: Title) {
+  constructor(
+    private fb: FormBuilder,
+    private resetPasswordService: ResetPasswordService,
+    private titleService: Title
+  ) {
     this.titleService.setTitle('Esqueci minha senha | Gerenciador de Estacionamento');
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -30,8 +35,8 @@ export class ForgotPasswordComponent {
     this.message = null;
 
     const email = this.forgotPasswordForm.value.email;
-    this.http.post(`http://localhost:8081/reset-password/request?email=${email}`, {}, { responseType: 'text' }).subscribe({
-      next: (response) => {
+    this.resetPasswordService.requestResetPassword(email).subscribe({
+      next: () => {
         this.message = 'Link enviado. Verifique seu e-mail.';
         this.isLoading = false;
       },

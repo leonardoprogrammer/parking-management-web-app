@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { ParkingSettingsService } from '../../services/parking-settings/parking-settings.service';
 
 @Component({
   selector: 'app-edit-parking-settings',
@@ -23,10 +24,10 @@ export class EditParkingSettingsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
     private authService: AuthService,
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<EditParkingSettingsComponent>,
+    private parkingSettingsService: ParkingSettingsService,
     @Inject(MAT_DIALOG_DATA) public data: { parkingId: string }
   ) {
     this.settingsForm = this.fb.group({
@@ -54,9 +55,8 @@ export class EditParkingSettingsComponent implements OnInit {
   loadSettings() {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8082/parking-settings?parkingId=${this.data.parkingId}`;
 
-    this.http.get<any>(url, { headers }).subscribe({
+    this.parkingSettingsService.getSettings(this.data.parkingId, headers).subscribe({
       next: (data) => {
         this.settingsForm.patchValue({
           chargeFromCheckIn: data.chargeFromCheckIn,
@@ -84,10 +84,9 @@ export class EditParkingSettingsComponent implements OnInit {
   createSettings() {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8082/parking-settings?parkingId=${this.data.parkingId}`;
     const body = this.prepareRequestBody();
 
-    this.http.post<any>(url, body, { headers }).subscribe({
+    this.parkingSettingsService.createSettings(this.data.parkingId, body, headers).subscribe({
       next: (data) => {
         this.settingsForm.patchValue({
           chargeFromCheckIn: data.chargeFromCheckIn,
@@ -116,10 +115,9 @@ export class EditParkingSettingsComponent implements OnInit {
 
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8082/parking-settings?parkingId=${this.data.parkingId}`;
     const body = this.prepareRequestBody();
 
-    this.http.put<any>(url, body, { headers }).subscribe({
+    this.parkingSettingsService.saveSettings(this.data.parkingId, body, headers).subscribe({
       next: () => {
         this.snackBar.open('Configurações salvas com sucesso!', 'Fechar', {
           duration: 3000,

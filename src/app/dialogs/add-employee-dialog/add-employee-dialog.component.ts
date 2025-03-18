@@ -1,12 +1,14 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { UsersService } from '../../services/users/users.service';
+import { EmployeeService } from '../../services/employee/employee.service';
 
 @Component({
   selector: 'app-add-employee-dialog',
@@ -25,8 +27,9 @@ export class AddEmployeeDialogComponent {
     public dialogRef: MatDialogRef<AddEmployeeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private usersService: UsersService,
+    private employeeService: EmployeeService
   ) {
     this.searchForm = this.fb.group({
       name: [''],
@@ -44,9 +47,8 @@ export class AddEmployeeDialogComponent {
 
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8081/users/search?parkingId=${this.data.parkingId}&name=${name}&email=${email}&cpf=${cpf}`;
 
-    this.http.get<any[]>(url, { headers }).subscribe({
+    this.usersService.searchUsers(this.data.parkingId, name, email, cpf, headers).subscribe({
       next: (data) => {
         this.searchResults = data;
         this.errorMessage = null;
@@ -72,9 +74,8 @@ export class AddEmployeeDialogComponent {
 
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:8082/employee?parkingId=${this.data.parkingId}&userId=${this.selectedUser.userId}`;
 
-    this.http.post<any>(url, {}, { headers }).subscribe({
+    this.employeeService.addEmployee(this.data.parkingId, this.selectedUser.userId, headers).subscribe({
       next: () => {
         this.dialogRef.close({ success: true });
       },

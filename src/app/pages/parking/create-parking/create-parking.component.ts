@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { ParkingService } from '../../../services/parking.service';
@@ -12,7 +12,7 @@ import { Title } from '@angular/platform-browser';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule],
   templateUrl: './create-parking.component.html',
-  styleUrl: './create-parking.component.scss',
+  styleUrls: ['./create-parking.component.scss'],
 })
 export class CreateParkingComponent {
   parkingForm: FormGroup;
@@ -24,7 +24,6 @@ export class CreateParkingComponent {
     private parkingService: ParkingService,
     private authService: AuthService,
     private router: Router,
-    private http: HttpClient,
     private titleService: Title
   ) {
     this.titleService.setTitle('Criar Estacionamento | Gerenciador de Estacionamento');
@@ -49,7 +48,7 @@ export class CreateParkingComponent {
       address: this.parkingForm.value.address,
     };
 
-    this.http.post('http://localhost:8082/parking', body, { headers }).subscribe({
+    this.parkingService.createParking(body, headers).subscribe({
       next: (response: any) => {
         this.router.navigate(['/manage', response.id]);
       },
