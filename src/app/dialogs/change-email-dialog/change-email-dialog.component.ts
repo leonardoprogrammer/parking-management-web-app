@@ -57,7 +57,8 @@ export class ChangeEmailDialogComponent {
         this.snackBar.open('E-mail alterado com sucesso!', 'Fechar', {
           duration: 3000,
         });
-        this.authService.setToken(response.accessToken);
+        this.authService.setToken(response.newAccessToken);
+        this.authService.setRefreshToken(response.newRefreshToken);
         this.dialogRef.close();
         this.data.onSuccess();
       },

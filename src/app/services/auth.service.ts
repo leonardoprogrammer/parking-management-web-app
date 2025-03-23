@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8081/auth';
-  private tokenKey = 'auth_token';
+  private accessTokenKey = 'auth_token';
   private refreshTokenKey = 'refresh_token';
   private userIdKey = 'user_id';
   private isAuthenticated = new BehaviorSubject<boolean>(this.hasToken());
@@ -19,7 +19,7 @@ export class AuthService {
     return this.http.post<{ accessToken: string, refreshToken: string, userId: string }>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
         if (typeof window !== 'undefined') {
-          localStorage.setItem(this.tokenKey, response.accessToken);
+          localStorage.setItem(this.accessTokenKey, response.accessToken);
           localStorage.setItem(this.refreshTokenKey, response.refreshToken);
           localStorage.setItem(this.userIdKey, response.userId);
         }
@@ -34,7 +34,7 @@ export class AuthService {
 
   logout(): void {
     if (typeof window !== 'undefined') {
-      localStorage.removeItem(this.tokenKey);
+      localStorage.removeItem(this.accessTokenKey);
       localStorage.removeItem(this.refreshTokenKey);
       localStorage.removeItem(this.userIdKey);
     }
@@ -45,7 +45,7 @@ export class AuthService {
     if (typeof window === 'undefined') {
       return null;
     }
-    return localStorage.getItem(this.tokenKey);
+    return localStorage.getItem(this.accessTokenKey);
   }
 
   getRefreshToken(): string | null {
@@ -72,19 +72,21 @@ export class AuthService {
 
   setToken(token: string): void {
     if (typeof window !== 'undefined') {
-      localStorage.setItem(this.tokenKey, token);
+      localStorage.setItem(this.accessTokenKey, token);
     }
   }
 
-  refreshToken(): Observable<{ accessToken: string }> {
-    console.log('Calling refreshToken'); // Adicione este log
+  setRefreshToken(token: string): void {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(this.refreshTokenKey, token);
+    }
+  }
+
+  refreshToken(): Observable<{ newAccessToken: string; newRefreshToken: string }> {
     const refreshToken = this.getRefreshToken();
-    return this.http.post<{ accessToken: string }>(`${this.apiUrl}/refresh-token`, { refreshToken }).pipe(
-      tap(response => {
-        if (typeof window !== 'undefined') {
-          localStorage.setItem(this.tokenKey, response.accessToken);
-        }
-      })
+    return this.http.post<{ newAccessToken: string; newRefreshToken: string }>(
+      `${this.apiUrl}/refresh-token`,
+      { refreshToken }
     );
   }
 }

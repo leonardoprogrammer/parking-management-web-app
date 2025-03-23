@@ -66,7 +66,8 @@ export class ChangePasswordDialogComponent {
         this.snackBar.open('Senha alterada com sucesso!', 'Fechar', {
           duration: 3000,
         });
-        this.authService.setToken(response.accessToken);
+        this.authService.setToken(response.newAccessToken);
+        this.authService.setRefreshToken(response.newRefreshToken);
         this.dialogRef.close();
         this.data.onSuccess();
       },
