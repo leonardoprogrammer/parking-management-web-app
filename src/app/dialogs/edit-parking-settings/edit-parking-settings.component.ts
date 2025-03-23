@@ -136,7 +136,7 @@ export class EditParkingSettingsComponent implements OnInit {
     const formValue = this.settingsForm.value;
     return {
       chargeFromCheckIn: formValue.chargeFromCheckIn,
-      minimumTimeToCharge: this.formatTime(formValue.minimumTimeToCharge),
+      minimumTimeToCharge: formValue.chargeFromCheckIn ? null : this.formatTime(formValue.minimumTimeToCharge),
       period: this.formatTime(formValue.period),
       valuePerPeriod: formValue.valuePerPeriod
     };

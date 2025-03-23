@@ -25,6 +25,11 @@ export class ParkedVehicleService {
     return this.http.get<any>(url, { headers });
   }
 
+  getVehicleCheckInDetails(vehicleId: string, headers: HttpHeaders): Observable<any> {
+    const url = `${this.apiUrl}/${vehicleId}/checkin`;
+    return this.http.get<any>(url, { headers });
+  }
+
   getHistory(parkingId: string, page: number, sizePage: number, headers: HttpHeaders): Observable<any> {
     const url = `${this.apiUrl}/history?parkingId=${parkingId}&page=${page}&sizePage=${sizePage}`;
     return this.http.get<any>(url, { headers });

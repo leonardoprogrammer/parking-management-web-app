@@ -129,7 +129,7 @@ export class ManageParkingComponent implements OnInit {
   openVehicleDetailsDialog(vehicle: any) {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.parkedVehicleService.getVehicleDetails(vehicle.id, headers).subscribe({
+    this.parkedVehicleService.getVehicleCheckInDetails(vehicle.id, headers).subscribe({
       next: (data) => {
         const dialogRef = this.dialog.open(VehicleDetailsDialogComponent, {
           data: {
