@@ -1,27 +1,205 @@
-# Parkingmanagementweb
+# Parking Management Web App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
+O **Parking Management Web App** é uma aplicação web desenvolvida com Angular para gerenciar estacionamentos. A aplicação permite que usuários administrem estacionamentos, adicionem veículos, gerenciem funcionários, visualizem históricos e muito mais. Este projeto foi projetado para ser intuitivo, eficiente e escalável.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🚀 Funcionalidades Principais
 
-## Code scaffolding
+- **Autenticação de Usuários**:
+  - Login e registro de novos usuários.
+  - Recuperação e redefinição de senha.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Gerenciamento de Estacionamentos**:
+  - Criação, edição e exclusão de estacionamentos.
+  - Visualização de detalhes do estacionamento.
 
-## Build
+- **Controle de Veículos**:
+  - Check-in e check-out de veículos.
+  - Histórico de veículos estacionados.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Gerenciamento de Funcionários**:
+  - Adição e remoção de funcionários.
+  - Controle de permissões de acesso.
 
-## Running unit tests
+- **Perfil do Usuário**:
+  - Atualização de informações pessoais.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## 🛠️ Tecnologias Utilizadas
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- **Frontend**:
+  - Angular 17
+  - Angular Material
+  - SCSS para estilização
+  - Moment.js para manipulação de datas
+  - Ngx-Mask e Currency Mask para formatação de campos
 
-## Further help
+- **Backend**:
+  - API RESTful (não incluída neste repositório)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- **Outras Ferramentas**:
+  - RxJS para manipulação de streams reativas
+  - TypeScript para tipagem estática
+  - Zone.js para gerenciamento de mudanças no Angular
+
+---
+
+## 📂 Estrutura do Projeto
+
+Abaixo está a estrutura principal do projeto:
+
+```
+src/
+├── app/
+│   ├── components/       # Componentes reutilizáveis
+│   ├── dialogs/          # Diálogos modais (ex.: adicionar veículo)
+│   ├── guards/           # Guards de rotas (auth e no-auth)
+│   ├── interceptors/     # Interceptores HTTP (ex.: auth-interceptor)
+│   ├── pages/            # Páginas principais da aplicação
+│   │   ├── auth/         # Páginas de autenticação (login, registro, etc.)
+│   │   ├── dashboard/    # Página inicial do usuário
+│   │   ├── parking/      # Páginas relacionadas a estacionamentos
+│   │   ├── profile/      # Página de perfil do usuário
+│   ├── services/         # Serviços para comunicação com a API
+│   ├── app.component.ts  # Componente raiz
+│   ├── app.routes.ts     # Configuração de rotas
+│   ├── app.config.ts     # Configuração da aplicação
+├── assets/               # Recursos estáticos (imagens, ícones, etc.)
+├── environments/         # Configurações de ambiente (dev/prod)
+├── styles.scss           # Estilos globais
+```
+
+---
+
+## ⚙️ Configuração e Execução
+
+### Pré-requisitos
+
+Certifique-se de ter as seguintes ferramentas instaladas:
+
+- [Node.js](https://nodejs.org/) (versão 18 ou superior)
+- [Angular CLI](https://angular.io/cli) (versão 17 ou superior)
+
+### Passos para Configuração
+
+1. **Clone o repositório**:
+   ```bash
+   git clone https://github.com/seu-usuario/parking-management-web-app.git
+   cd parking-management-web-app
+   ```
+
+2. **Instale as dependências**:
+   ```bash
+   npm install
+   ```
+
+3. **Inicie o servidor de desenvolvimento**:
+   ```bash
+   ng serve
+   ```
+
+4. **Acesse a aplicação**: Abra o navegador e vá para [http://localhost:4200](http://localhost:4200).
+
+---
+
+## 🧪 Testes
+
+### Testes Unitários
+
+Execute os testes unitários com o Karma:
+```bash
+ng test
+```
+
+### Testes End-to-End
+
+Execute os testes end-to-end (E2E):
+```bash
+ng e2e
+```
+
+---
+
+## 🌐 Rotas da Aplicação
+
+| Rota                  | Descrição                              | Guard Utilizado |
+|-----------------------|----------------------------------------|-----------------|
+| `/login`              | Página de login                       | `noAuthGuard`   |
+| `/register`           | Página de registro                    | `noAuthGuard`   |
+| `/dashboard`          | Dashboard principal                   | `authGuard`     |
+| `/create-parking`     | Criar novo estacionamento              | `authGuard`     |
+| `/manage/:id`         | Gerenciar estacionamento específico    | `authGuard`     |
+| `/manage/:id/edit`    | Editar estacionamento                  | `authGuard`     |
+| `/manage/:id/history` | Histórico de veículos                  | `authGuard`     |
+| `/manage/:id/employees` | Gerenciar funcionários               | `authGuard`     |
+| `/profile`            | Perfil do usuário                     | `authGuard`     |
+
+---
+
+## 📋 Scripts Disponíveis
+
+### Desenvolvimento
+
+Iniciar servidor de desenvolvimento:
+```bash
+npm start
+```
+
+Build para produção:
+```bash
+npm run build
+```
+
+Executar testes unitários:
+```bash
+npm test
+```
+
+---
+
+## 📖 Documentação Adicional
+
+- [Angular CLI: Documentação oficial](https://angular.io/cli)
+- [Angular Material: Documentação oficial](https://material.angular.io/)
+- [Moment.js: Documentação oficial](https://momentjs.com/)
+
+---
+
+## 🖼️ Screenshots
+
+### Dashboard
+<img alt="Dashboard" src="https://via.placeholder.com/800x400?text=Dashboard">
+
+### Gerenciamento de Estacionamento
+<img alt="Gerenciamento de Estacionamento" src="https://via.placeholder.com/800x400?text=Gerenciamento+de+Estacionamento">
+
+---
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Siga os passos abaixo para contribuir:
+
+1. Faça um fork do projeto.
+2. Crie uma branch para sua feature:
+   ```bash
+   git checkout -b minha-feature
+   ```
+3. Commit suas alterações:
+   ```bash
+   git commit -m "Minha nova feature"
+   ```
+4. Envie para o repositório remoto:
+   ```bash
+   git push origin minha-feature
+   ```
+5. Abra um Pull Request.
+
+---
+
+## 📝 Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+---
