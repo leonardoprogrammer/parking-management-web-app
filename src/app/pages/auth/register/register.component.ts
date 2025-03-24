@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { Title } from '@angular/platform-browser';
-import { AuthService } from '../../../services/auth.service';
+import { UsersService } from '../../../services/users/users.service';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +23,7 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService,
+    private usersService: UsersService,
     private titleService: Title
   ) {
     this.titleService.setTitle('Cadastro | Gerenciador de Estacionamento');
@@ -54,7 +54,7 @@ export class RegisterComponent {
 
     const { confirmPassword, ...userData } = this.registerForm.value;
 
-    this.authService.register(userData).subscribe({
+    this.usersService.registerUser(userData).subscribe({
       next: (response) => {
         this.isLoading = false;
         this.router.navigate(['/login']);

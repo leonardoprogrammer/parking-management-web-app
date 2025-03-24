@@ -10,6 +10,10 @@ export class UsersService {
 
   constructor(private http: HttpClient) {}
 
+  registerUser(userData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, userData);
+  }
+
   getCurrentUser(headers: HttpHeaders): Observable<any> {
     const url = `${this.apiUrl}/currentUser`;
     return this.http.get<any>(url, { headers });
