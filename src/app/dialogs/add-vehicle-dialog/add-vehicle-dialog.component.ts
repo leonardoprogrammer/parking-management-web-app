@@ -28,56 +28,6 @@ export const MY_FORMATS = {
 
 @Component({
   selector: 'app-add-vehicle-dialog',
-  template: `
-    <h2 mat-dialog-title>Adicionar Veículo</h2>
-    <mat-dialog-content>
-      <form [formGroup]="vehicleForm">
-        <mat-form-field>
-          <mat-label>Placa</mat-label>
-          <input matInput formControlName="plate" required mask="AAA-AAAA">
-          <mat-error *ngIf="vehicleForm.get('plate')?.invalid && vehicleForm.get('plate')?.touched">
-            Placa é obrigatória
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Modelo</mat-label>
-          <input matInput formControlName="model" required>
-          <mat-error *ngIf="vehicleForm.get('model')?.invalid && vehicleForm.get('model')?.touched">
-            Modelo é obrigatório
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Cor</mat-label>
-          <input matInput formControlName="color" required>
-          <mat-error *ngIf="vehicleForm.get('color')?.invalid && vehicleForm.get('color')?.touched">
-            Cor é obrigatória
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Vaga</mat-label>
-          <input matInput formControlName="space">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Data de Entrada</mat-label>
-          <input matInput formControlName="entryDate" required mask="00/00/0000">
-          <mat-error *ngIf="vehicleForm.get('entryDate')?.invalid && vehicleForm.get('entryDate')?.touched">
-            Data é obrigatória
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Hora de Entrada</mat-label>
-          <input matInput formControlName="entryTime" required mask="00:00">
-          <mat-error *ngIf="vehicleForm.get('entryTime')?.invalid && vehicleForm.get('entryTime')?.touched">
-            Hora é obrigatória
-          </mat-error>
-        </mat-form-field>
-      </form>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-button (click)="onCancel()">Fechar</button>
-      <button mat-button color="primary" (click)="onAdd()" [disabled]="vehicleForm.invalid">Adicionar</button>
-    </mat-dialog-actions>
-  `,
   standalone: true,
   imports: [
     CommonModule,
@@ -94,7 +44,9 @@ export const MY_FORMATS = {
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     provideNgxMask()
-  ]
+  ],
+  templateUrl: './add-vehicle-dialog.component.html',
+  styleUrls: ['./add-vehicle-dialog.component.scss'],
 })
 export class AddVehicleDialogComponent {
   vehicleForm: FormGroup;
@@ -112,6 +64,13 @@ export class AddVehicleDialogComponent {
       entryDate: [now.format('DD/MM/YYYY'), [Validators.required]],
       entryTime: [now.format('HH:mm'), [Validators.required]]
     });
+  }
+
+  onInputUpperCase(field: string): void {
+    const control = this.vehicleForm.get(field);
+    if (control) {
+      control.setValue(control.value.toUpperCase(), { emitEvent: false });
+    }
   }
 
   onAdd(): void {

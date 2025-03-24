@@ -14,8 +14,6 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
   const isRefreshing = new BehaviorSubject<boolean>(false);
   const refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  console.log('Intercepting request:', req.url);
-
   if (token && !req.url.includes('/refresh-token')) {
     req = req.clone({
       setHeaders: {

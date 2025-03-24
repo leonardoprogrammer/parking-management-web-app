@@ -56,9 +56,13 @@ export class EmployeesComponent implements OnInit {
       next: (data) => {
         this.ownerName = data.ownerName;
         this.employees = data.employees;
-        this.errorMessage = null;
+        if (this.employees.length === 0) {
+          this.errorMessage = 'Nenhum funcionário adicionado';
+        } else {
+          this.errorMessage = null;
+        }
       },
-      error: (error) => {
+      error: () => {
         this.errorMessage = 'Erro ao carregar funcionários';
       },
     });
@@ -120,7 +124,7 @@ export class EmployeesComponent implements OnInit {
         });
         this.loadEmployees();
       },
-      error: (error) => {
+      error: () => {
         this.errorMessage = 'Erro ao remover funcionário';
         this.snackBar.open('Erro ao remover funcionário', 'Fechar', {
           duration: 3000,

@@ -1,12 +1,10 @@
 <div class="employees-container">
   <div class="owner">
-    <p><strong>Dono:</strong> {{ ownerName }}</p>
+    <p><strong>Proprietário:</strong> {{ ownerName }}</p>
   </div>
   <div class="header">
-    <div class="actions">
-      <h3>Funcionários</h3>
-      <button *ngIf="canAddEmployee" class="add-employee-button" (click)="openAddEmployeeDialog()">Adicionar</button>
-    </div>
+    <h3>Funcionários</h3>
+    <button *ngIf="canAddEmployee" class="add-employee-button" (click)="openAddEmployeeDialog()">Adicionar</button>
   </div>
 
   <div *ngIf="errorMessage" class="error-message">

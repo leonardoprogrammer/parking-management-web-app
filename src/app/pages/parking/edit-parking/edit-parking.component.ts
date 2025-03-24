@@ -126,7 +126,6 @@ export class EditParkingComponent implements OnInit {
         this.loadParkingDetails();
       },
       error: (error) => {
-        console.log('Error:', error);
         this.snackBar.open('Erro ao tentar editar informações', 'Fechar', {
           duration: 3000,
         });
@@ -151,8 +150,10 @@ export class EditParkingComponent implements OnInit {
       next: () => {
         this.router.navigate(['/dashboard']);
       },
-      error: (error) => {
-        console.log('Error:', error);
+      error: () => {
+        this.snackBar.open('Erro ao excluir estacionamento', 'Fechar', {
+          duration: 3000,
+        });
       },
     });
   }

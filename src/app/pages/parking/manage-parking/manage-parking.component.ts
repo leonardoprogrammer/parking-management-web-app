@@ -42,9 +42,9 @@ export class ManageParkingComponent implements OnInit {
   ngOnInit() {
     this.parkingId = this.route.snapshot.paramMap.get('id');
     if (this.parkingId) {
+      this.checkPermissions();
       this.loadParkingDetails();
       this.loadParkedVehicles();
-      this.checkPermissions();
     }
   }
 
@@ -115,10 +115,11 @@ export class ManageParkingComponent implements OnInit {
       parkingId: this.parkingId,
       checkinEmployeeId: userId
     };
-
+  
     this.parkedVehicleService.addVehicle(body, headers).subscribe({
       next: (data) => {
         this.parkedVehicles.unshift(data);
+        this.errorMessage = null;
       },
       error: () => {
         this.errorMessage = 'Erro ao adicionar veículo';

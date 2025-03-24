@@ -1,8 +1,14 @@
 .employees-container {
-  max-width: 800px;
+  min-width: 400px;
+  max-width: 600px;
   margin: auto;
   text-align: left;
   padding-top: 70px;
+
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
   .owner {
     margin-bottom: 20px;
@@ -17,23 +23,18 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-
-    .actions {
-      display: flex;
-      align-items: center;
-
-      h3 {
-        margin: 0 10px 0 0;
-      }
-
-      .add-employee-button {
-        padding: 8px 12px;
-        border: none;
-        cursor: pointer;
-        background-color: #007bff;
-        color: white;
-        border-radius: 4px;
-      }
+  
+    h3 {
+      margin: 0;
+    }
+  
+    .add-employee-button {
+      padding: 8px 12px;
+      border: none;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border-radius: 4px;
     }
   }
 
@@ -58,6 +59,7 @@
         border-radius: 4px;
         margin-bottom: 10px;
         cursor: pointer;
+        back
 
         .employee-info {
           flex-grow: 1;

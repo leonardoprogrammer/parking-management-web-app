@@ -1,6 +1,7 @@
 <div class="dashboard-container">
   <header>
-    <h1>Selecione um estacionamento</h1>
+    <h2 *ngIf="parkings.length > 0">Seus estacionamentos</h2>
+    <h1 *ngIf="!isLoading && parkings.length === 0">Sem estacionamentos</h1>
   </header>
 
   <div *ngIf="isLoading">Carregando...</div>

@@ -56,12 +56,10 @@ export class RegisterComponent {
 
     this.authService.register(userData).subscribe({
       next: (response) => {
-        console.log('Cadastro realizado com sucesso:', response);
         this.isLoading = false;
         this.router.navigate(['/login']);
       },
-      error: (error) => {
-        console.error('Erro ao realizar cadastro:', error);
+      error: () => {
         this.isLoading = false;
         this.errorMessage = 'Erro ao realizar cadastro. Tente novamente mais tarde.';
       }

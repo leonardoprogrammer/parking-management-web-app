@@ -1,6 +1,6 @@
 .dashboard-container {
   max-width: 800px;
-  margin: 70px auto 0;
+  margin: 10px auto 0;
   text-align: center;
 
   header {
@@ -15,6 +15,7 @@
   }
 
   .parking-list {
+    min-width: 500px;
     display: grid;
     gap: 15px;
     margin-top: 20px;
@@ -25,6 +26,7 @@
       border-radius: 8px;
       text-align: left;
       cursor: pointer;
+      background-color: white;
 
       button {
         margin-top: 10px;
