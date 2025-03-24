@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EmployeePermissionsService {
-  private apiUrl = 'http://localhost:8082/employee-permissions';
+  private apiUrl = 'http://localhost:8082/api/employee-permissions';
 
   constructor(private http: HttpClient) { }
 

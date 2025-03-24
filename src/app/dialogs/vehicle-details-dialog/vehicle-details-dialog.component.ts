@@ -70,7 +70,7 @@ export class VehicleDetailsDialogComponent implements AfterViewInit {
         checkoutDate: localDate,
         checkoutEmployeeId: userId,
         paid: this.vehicleForm.get('paid')?.value,
-        amountPaid: this.vehicleForm.get('amountToPay')?.value,
+        amountPaid: this.vehicleForm.get('paid')?.value ? this.vehicleForm.get('amountToPay')?.value : null,
         paymentMethod: this.vehicleForm.get('paid')?.value ? this.vehicleForm.get('paymentMethod')?.value : null
       };
 
