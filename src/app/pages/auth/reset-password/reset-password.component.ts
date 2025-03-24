@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ResetPasswordService } from '../../../services/reset-password/reset-password.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
@@ -22,6 +23,7 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private route: ActivatedRoute,
     private titleService: Title,
     private resetPasswordService: ResetPasswordService
@@ -96,5 +98,9 @@ export class ResetPasswordComponent implements OnInit {
       return { 'mismatch': true };
     }
     return null;
+  }
+
+  goToHome(): void {
+    this.router.navigate(['/']);
   }
 }
