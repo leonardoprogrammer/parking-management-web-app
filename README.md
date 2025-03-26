@@ -2,6 +2,8 @@
 
 O **Parking Management Web App** é uma aplicação web desenvolvida com Angular para gerenciar estacionamentos. A aplicação permite que usuários administrem estacionamentos, adicionem veículos, gerenciem funcionários, visualizem históricos e muito mais. Este projeto foi projetado para ser intuitivo, eficiente e escalável.
 
+🔗 **Repositório do back-end:** [Parking Management Server](https://github.com/leonardoprogrammer/parking-management-server)
+
 ---
 
 ## 🚀 Funcionalidades Principais
@@ -169,11 +171,35 @@ npm test
 
 ## 🖼️ Screenshots
 
-### Dashboard
-<img alt="Dashboard" src="https://via.placeholder.com/800x400?text=Dashboard">
+### Login
+<img alt="Login" src="./screenshots/login.png">
 
-### Gerenciamento de Estacionamento
-<img alt="Gerenciamento de Estacionamento" src="https://via.placeholder.com/800x400?text=Gerenciamento+de+Estacionamento">
+### Cadastro
+<img alt="Cadastro" src="./screenshots/register.png">
+
+### Dashboard
+<img alt="Dashboard" src="./screenshots/dashboard.png">
+
+### Gerenciamento
+<img alt="Gerenciamento" src="./screenshots/management.png">
+
+### Histórico
+<img alt="Histórico" src="./screenshots/history.png">
+
+### Funcionários
+<img alt="Funcionários" src="./screenshots/employees.png">
+
+### Adicionar Funcionário
+<img alt="Adicionar Funcionário" src="./screenshots/add_employee.png">
+
+### Editar Estacionamento
+<img alt="Editar Estacionamento" src="./screenshots/edit_parking.png">
+
+### Perfil
+<img alt="Perfil" src="./screenshots/profile.png">
+
+### Esqueci Minha Senha
+<img alt="Esqueci Minha Senha" src="./screenshots/forgot_password.png">
 
 ---
 
