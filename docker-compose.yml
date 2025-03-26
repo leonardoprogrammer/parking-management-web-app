@@ -1,0 +1,8 @@
+services:
+  parking-management-web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    container_name: parking-management-web-app
