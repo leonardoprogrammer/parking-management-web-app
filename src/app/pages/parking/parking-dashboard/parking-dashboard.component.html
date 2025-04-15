@@ -1,0 +1,39 @@
+<div class="dashboard-container">
+  <!-- Botões de filtro -->
+  <div class="filter-buttons">
+    <button
+      mat-button
+      *ngFor="let filter of ['Hoje', 'Ontem', 'Esta semana', 'Este mês', 'Últimos 30 dias', 'Todo']"
+      [class.selected]="filter === selectedFilter"
+      (click)="selectFilter(filter)"
+    >
+      {{ filter }}
+    </button>
+  </div>
+
+  <!-- Cards -->
+  <div class="cards">
+    <mat-card class="card">
+      <h3>Faturamento</h3>
+      <p>R$ {{ revenue | number: '1.2-2' }}</p>
+    </mat-card>
+    <mat-card class="card">
+      <h3>Check-ins</h3>
+      <p>{{ checkIns }}</p>
+    </mat-card>
+    <mat-card class="card">
+      <h3>Check-outs</h3>
+      <p>{{ checkOuts }}</p>
+    </mat-card>
+  </div>
+
+  <!-- Gráfico -->
+  <div class="chart">
+    <canvas
+      baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType"
+    ></canvas>
+  </div>
+</div>

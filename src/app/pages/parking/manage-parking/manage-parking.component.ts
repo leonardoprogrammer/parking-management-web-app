@@ -27,6 +27,7 @@ export class ManageParkingComponent implements OnInit {
   canEditParking: boolean = false;
   canCheckinVehicle: boolean = false;
   canCheckoutVehicle: boolean = false;
+  canViewDashboard: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -89,6 +90,7 @@ export class ManageParkingComponent implements OnInit {
         this.canEditParking = data.canEditParking;
         this.canCheckinVehicle = data.canCheckinVehicle;
         this.canCheckoutVehicle = data.canCheckoutVehicle;
+        this.canViewDashboard = data.canViewDashboard;
       },
       error: (error) => {
         console.error('Erro ao verificar permissões', error);
@@ -164,5 +166,9 @@ export class ManageParkingComponent implements OnInit {
 
   editParking() {
     this.router.navigate([`/manage/${this.parkingId}/edit`]);
+  }
+
+  viewDashboard() {
+    this.router.navigate([`/manage/${this.parkingId}/dashboard`]);
   }
 }

@@ -12,6 +12,7 @@ import { EmployeesComponent } from './pages/parking/employees/employees.componen
 import { ProfileComponent } from './pages/profile/profile.component';
 import { authGuard } from './guards/auth-guard.service';
 import { noAuthGuard } from './guards/no-auth-guard.service';
+import { ParkingDashboardComponent } from './pages/parking/parking-dashboard/parking-dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent, canActivate: [noAuthGuard] },
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: 'manage/:id/edit', component: EditParkingComponent, canActivate: [authGuard] },
   { path: 'manage/:id/history', component: HistoryComponent, canActivate: [authGuard] },
   { path: 'manage/:id/employees', component: EmployeesComponent, canActivate: [authGuard] },
+  { path: 'manage/:id/dashboard', component: ParkingDashboardComponent, canActivate: [authGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: 'login' },
 ];
