@@ -1,5 +1,4 @@
 <div class="dashboard-container">
-  <!-- Botões de filtro -->
   <div class="filter-buttons">
     <button
       mat-button
@@ -11,11 +10,10 @@
     </button>
   </div>
 
-  <!-- Cards -->
   <div class="cards">
     <mat-card class="card">
       <h3>Faturamento</h3>
-      <p>R$ {{ revenue | number: '1.2-2' }}</p>
+      <p>{{ revenue }}</p>
     </mat-card>
     <mat-card class="card">
       <h3>Check-ins</h3>
@@ -27,7 +25,6 @@
     </mat-card>
   </div>
 
-  <!-- Gráfico -->
   <div class="chart">
     <canvas
       baseChart
