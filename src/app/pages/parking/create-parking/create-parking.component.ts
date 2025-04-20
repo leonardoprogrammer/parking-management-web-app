@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { RouterModule, Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
-import { ParkingService } from '../../../services/parking.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { ParkingService } from '../../../services/parking/parking.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({

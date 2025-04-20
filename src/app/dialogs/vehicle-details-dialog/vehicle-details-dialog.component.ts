@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ParkedVehicleService } from '../../services/parked-vehicle/parked-vehicle.service';

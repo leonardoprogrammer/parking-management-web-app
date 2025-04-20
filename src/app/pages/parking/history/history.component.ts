@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { HistoryDetailsDialogComponent } from '../../../dialogs/history-details-dialog/history-details-dialog.component';
 import { Title } from '@angular/platform-browser';
