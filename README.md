@@ -177,14 +177,17 @@ npm test
 ### Cadastro
 <img alt="Cadastro" src="./screenshots/register.png">
 
-### Dashboard
-<img alt="Dashboard" src="./screenshots/dashboard.png">
+### Estacionamentos
+<img alt="Dashboard" src="./screenshots/parkings.png">
 
 ### Gerenciamento
 <img alt="Gerenciamento" src="./screenshots/management.png">
 
 ### Histórico
 <img alt="Histórico" src="./screenshots/history.png">
+
+### Dashboard
+<img alt="Dashboard" src="./screenshots/dashboard.png">
 
 ### Funcionários
 <img alt="Funcionários" src="./screenshots/employees.png">
